@@ -9,9 +9,9 @@ import type { Combo } from "@/types/api";
 export const Route = createFileRoute("/combos/")({
   head: () => ({
     meta: [
-      { title: "Plant Combos | MyGarden" },
+      { title: "Plant Combos | Jharna Aquarium & Nursery" },
       { name: "description", content: "Curated plant combinations for thoughtful green spaces." },
-      { property: "og:title", content: "Plant Combos | MyGarden" },
+      { property: "og:title", content: "Plant Combos | Jharna Aquarium & Nursery" },
       { property: "og:description", content: "Curated plant combinations." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

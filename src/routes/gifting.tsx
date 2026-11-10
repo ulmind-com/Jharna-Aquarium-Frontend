@@ -7,9 +7,9 @@ import { defaultGifting } from "@/components/home/gifting-band";
 export const Route = createFileRoute("/gifting")({
   head: () => ({
     meta: [
-      { title: "Plant Gifting | MyGarden" },
+      { title: "Plant Gifting | Jharna Aquarium & Nursery" },
       { name: "description", content: "Ready-to-gift plant hampers for festivals, housewarmings and thank-yous — packed to arrive looking their best." },
-      { property: "og:title", content: "Plant Gifting | MyGarden" },
+      { property: "og:title", content: "Plant Gifting | Jharna Aquarium & Nursery" },
       { property: "og:description", content: "Plant hampers, gift-wrapped and delivered." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

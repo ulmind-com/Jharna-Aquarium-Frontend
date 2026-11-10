@@ -1,11 +1,6 @@
 {
   "version": "0.0.1",
   "configurations": [
-    {
-      "name": "nursery-frontend",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 8080
-    }
+    { "name": "jharna-frontend", "runtimeExecutable": "bun", "runtimeArgs": ["run", "dev"], "port": 3000 }
   ]
 }

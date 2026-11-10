@@ -13,9 +13,9 @@ import { normalizeApiError } from "@/lib/api";
 export const Route = createFileRoute("/account/security")({
   head: () => ({
     meta: [
-      { title: "Security | MyGarden" },
+      { title: "Security | Jharna Aquarium & Nursery" },
       { name: "description", content: "Change your password and sign out." },
-      { property: "og:title", content: "Security | MyGarden" },
+      { property: "og:title", content: "Security | Jharna Aquarium & Nursery" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

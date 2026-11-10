@@ -11,9 +11,9 @@ import { useSupportChat } from "@/contexts/support-chat-context";
 export const Route = createFileRoute("/account/")({
   head: () => ({
     meta: [
-      { title: "My Account | MyGarden" },
-      { name: "description", content: "Manage your MyGarden profile, orders and addresses." },
-      { property: "og:title", content: "My Account | MyGarden" },
+      { title: "My Account | Jharna Aquarium & Nursery" },
+      { name: "description", content: "Manage your Jharna Aquarium & Nursery profile, orders and addresses." },
+      { property: "og:title", content: "My Account | Jharna Aquarium & Nursery" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

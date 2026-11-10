@@ -18,13 +18,13 @@ import type { BlogPost } from "@/types/api";
 export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
-      { title: "The Plant Journal | MyGarden" },
+      { title: "The Plant Journal | Jharna Aquarium & Nursery" },
       {
         name: "description",
         content:
           "Care guides, growing notes and styling ideas from our nursery — written for real homes and balconies.",
       },
-      { property: "og:title", content: "The Plant Journal | MyGarden" },
+      { property: "og:title", content: "The Plant Journal | Jharna Aquarium & Nursery" },
       {
         property: "og:description",
         content: "Plant care guides and growing notes from our nursery.",

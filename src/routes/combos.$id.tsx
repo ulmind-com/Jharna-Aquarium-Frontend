@@ -12,7 +12,7 @@ import { dealLine } from "@/routes/combos.index";
 import type { CartItem, ComboEntry } from "@/types/api";
 
 export const Route = createFileRoute("/combos/$id")({
-  head: () => ({ meta: [{ title: "Plant Combo | MyGarden" }] }),
+  head: () => ({ meta: [{ title: "Plant Combo | Jharna Aquarium & Nursery" }] }),
   component: Page,
 });
 

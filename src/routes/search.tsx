@@ -16,9 +16,9 @@ export const Route = createFileRoute("/search")({
     typeof s["q"] === "string" && s["q"] ? { q: s["q"] } : {},
   head: () => ({
     meta: [
-      { title: "Search | MyGarden" },
+      { title: "Search | Jharna Aquarium & Nursery" },
       { name: "description", content: "Search plants, planters, and garden essentials." },
-      { property: "og:title", content: "Search | MyGarden" },
+      { property: "og:title", content: "Search | Jharna Aquarium & Nursery" },
       { property: "og:description", content: "Find the right plants and garden essentials." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

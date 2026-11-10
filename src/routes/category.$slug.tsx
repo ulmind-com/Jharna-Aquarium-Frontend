@@ -11,12 +11,12 @@ const titleCase = (value: string) => value.replaceAll("-", " ").replace(/\b\w/g,
 export const Route = createFileRoute("/category/$slug")({
   head: ({ params }) => {
     const name = titleCase(params.slug);
-    const description = `Shop the ${name} collection from MyGarden.`;
+    const description = `Shop the ${name} collection from Jharna Aquarium & Nursery.`;
     return {
       meta: [
-        { title: `${name} | MyGarden` },
+        { title: `${name} | Jharna Aquarium & Nursery` },
         { name: "description", content: description },
-        { property: "og:title", content: `${name} | MyGarden` },
+        { property: "og:title", content: `${name} | Jharna Aquarium & Nursery` },
         { property: "og:description", content: description },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },

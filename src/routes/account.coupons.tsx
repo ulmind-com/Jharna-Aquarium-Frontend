@@ -13,9 +13,9 @@ import type { Coupon } from "@/types/api";
 export const Route = createFileRoute("/account/coupons")({
   head: () => ({
     meta: [
-      { title: "Coupons | MyGarden" },
+      { title: "Coupons | Jharna Aquarium & Nursery" },
       { name: "description", content: "Offers you can use on your next order." },
-      { property: "og:title", content: "Coupons | MyGarden" },
+      { property: "og:title", content: "Coupons | Jharna Aquarium & Nursery" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

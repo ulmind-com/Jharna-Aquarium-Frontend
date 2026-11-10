@@ -16,9 +16,9 @@ import type { Address } from "@/types/api";
 export const Route = createFileRoute("/account/addresses")({
   head: () => ({
     meta: [
-      { title: "Addresses | MyGarden" },
+      { title: "Addresses | Jharna Aquarium & Nursery" },
       { name: "description", content: "Manage your saved delivery addresses." },
-      { property: "og:title", content: "Addresses | MyGarden" },
+      { property: "og:title", content: "Addresses | Jharna Aquarium & Nursery" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

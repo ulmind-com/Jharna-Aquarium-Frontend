@@ -17,9 +17,9 @@ import type { MyReview } from "@/types/api";
 export const Route = createFileRoute("/account/reviews")({
   head: () => ({
     meta: [
-      { title: "My Reviews | MyGarden" },
+      { title: "My Reviews | Jharna Aquarium & Nursery" },
       { name: "description", content: "Reviews you've written, and how to change them." },
-      { property: "og:title", content: "My Reviews | MyGarden" },
+      { property: "og:title", content: "My Reviews | Jharna Aquarium & Nursery" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

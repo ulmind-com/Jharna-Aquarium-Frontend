@@ -13,9 +13,9 @@ import { normalizeApiError } from "@/lib/api";
 export const Route = createFileRoute("/account/profile")({
   head: () => ({
     meta: [
-      { title: "Profile | MyGarden" },
+      { title: "Profile | Jharna Aquarium & Nursery" },
       { name: "description", content: "Update your name, photo and phone number." },
-      { property: "og:title", content: "Profile | MyGarden" },
+      { property: "og:title", content: "Profile | Jharna Aquarium & Nursery" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

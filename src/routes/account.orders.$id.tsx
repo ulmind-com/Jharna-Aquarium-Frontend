@@ -20,9 +20,9 @@ import type { OrderItem } from "@/types/api";
 export const Route = createFileRoute("/account/orders/$id")({
   head: () => ({
     meta: [
-      { title: "Order Details | MyGarden" },
+      { title: "Order Details | Jharna Aquarium & Nursery" },
       { name: "description", content: "Order items, payment and delivery status." },
-      { property: "og:title", content: "Order Details | MyGarden" },
+      { property: "og:title", content: "Order Details | Jharna Aquarium & Nursery" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

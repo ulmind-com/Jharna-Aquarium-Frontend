@@ -15,7 +15,7 @@ export interface ComparisonRow {
   others: Cell;
 }
 
-const BRAND_LABEL = "MyGarden";
+const BRAND_LABEL = "Jharna Aquarium & Nursery";
 
 export const defaultComparisonRows: ComparisonRow[] = [
   {

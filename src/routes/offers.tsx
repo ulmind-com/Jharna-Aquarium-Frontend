@@ -34,13 +34,13 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/offers")({
   head: () => ({
     meta: [
-      { title: "Offers & Coupons | MyGarden" },
+      { title: "Offers & Coupons | Jharna Aquarium & Nursery" },
       {
         name: "description",
         content:
           "Live coupons, free shipping deals and the biggest savings on plants, pots and garden care.",
       },
-      { property: "og:title", content: "Offers & Coupons | MyGarden" },
+      { property: "og:title", content: "Offers & Coupons | Jharna Aquarium & Nursery" },
       { property: "og:description", content: "Live coupons and the biggest savings on plants." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -21,7 +21,7 @@ function ComparisonValue({ cell, featured = false }: { cell: ProductComparisonCe
 
 export function ComparisonSection({ comparison }: { comparison?: ProductComparison | undefined }) {
   if (!comparison?.image || comparison.rows.length === 0) return null;
-  const brandLabel = comparison.brand_label || "MyGarden";
+  const brandLabel = comparison.brand_label || "Jharna Aquarium & Nursery";
 
   return (
     <section className="bg-storefront-wash py-8 sm:py-10 lg:py-12" aria-labelledby="comparison-title">

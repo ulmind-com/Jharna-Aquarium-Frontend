@@ -7,10 +7,10 @@ import { StoreLocatorSection, storesFromApi } from "@/components/home/store-loca
 export const Route = createFileRoute("/locate-store")({
   head: () => ({
     meta: [
-      { title: "Locate a Store | MyGarden" },
-      { name: "description", content: "Find your nearest MyGarden store — addresses, directions and opening hours, city by city." },
-      { property: "og:title", content: "Locate a Store | MyGarden" },
-      { property: "og:description", content: "Every MyGarden store, city by city." },
+      { title: "Locate a Store | Jharna Aquarium & Nursery" },
+      { name: "description", content: "Find your nearest Jharna Aquarium & Nursery store — addresses, directions and opening hours, city by city." },
+      { property: "og:title", content: "Locate a Store | Jharna Aquarium & Nursery" },
+      { property: "og:description", content: "Every Jharna Aquarium & Nursery store, city by city." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -34,7 +34,7 @@ function Page() {
             Locate a store
           </h1>
           <p className="mx-auto mt-4 max-w-[46rem] text-sm leading-7 text-white/85 sm:text-base sm:leading-8">
-            Pick your city to see every MyGarden store, with directions one tap away. Our teams can help with plant
+            Pick your city to see every Jharna Aquarium & Nursery store, with directions one tap away. Our teams can help with plant
             choice, repotting and after-care in person.
           </p>
         </div>

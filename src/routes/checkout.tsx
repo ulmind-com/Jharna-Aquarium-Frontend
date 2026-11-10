@@ -37,11 +37,11 @@ import type { Address, ApplicableCoupon, Coupon, OrderQuote } from "@/types/api"
 export const Route = createFileRoute("/checkout")({
   head: () => ({
     meta: [
-      { title: "Secure Checkout | MyGarden" },
+      { title: "Secure Checkout | Jharna Aquarium & Nursery" },
       {
         name: "description",
         content:
-          "Complete your MyGarden order securely — UPI, cards, netbanking and cash on delivery.",
+          "Complete your Jharna Aquarium & Nursery order securely — UPI, cards, netbanking and cash on delivery.",
       },
     ],
   }),
@@ -550,7 +550,7 @@ function CheckoutPage() {
           amount: amountPaise,
           currency: order.razorpay_currency || order.currency || "INR",
           order_id: order.razorpay_order_id,
-          name: settings?.shop.name || "MyGarden",
+          name: settings?.shop.name || "Jharna Aquarium & Nursery",
           description: `Order ${order.order_number || orderId}`,
           theme: { color: "#008B5E" },
           prefill: {
@@ -610,7 +610,7 @@ function CheckoutPage() {
     );
   }
 
-  const shopName = settings?.shop.name || "MyGarden";
+  const shopName = settings?.shop.name || "Jharna Aquarium & Nursery";
   const totalLabel = quote ? inr(quote.total) : quoting ? "Calculating…" : "Total after address";
   const codBlocked = quote?.cod_available === false;
   const appliedOffer = coupon ? offerBoard?.offers.find((o) => o.code === coupon) : undefined;

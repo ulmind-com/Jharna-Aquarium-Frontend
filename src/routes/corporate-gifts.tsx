@@ -8,9 +8,9 @@ import { defaultGifting } from "@/components/home/gifting-band";
 export const Route = createFileRoute("/corporate-gifts")({
   head: () => ({
     meta: [
-      { title: "Corporate Gifting | MyGarden" },
+      { title: "Corporate Gifting | Jharna Aquarium & Nursery" },
       { name: "description", content: "Bulk plant gifting for festivals, onboarding kits and office refreshes — GST invoicing and a dedicated account manager." },
-      { property: "og:title", content: "Corporate Gifting | MyGarden" },
+      { property: "og:title", content: "Corporate Gifting | Jharna Aquarium & Nursery" },
       { property: "og:description", content: "Bulk plant gifting with GST invoicing and a dedicated account manager." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

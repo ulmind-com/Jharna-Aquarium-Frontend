@@ -9,9 +9,9 @@ import type { GardenBlock, GardenBlocks, GardenService, GardenServiceSection } f
 export const Route = createFileRoute("/garden-services")({
   head: () => ({
     meta: [
-      { title: "Garden Services | MyGarden" },
+      { title: "Garden Services | Jharna Aquarium & Nursery" },
       { name: "description", content: "Year round care for your garden and office space — landscaping, vertical gardens, corporate plant rentals and indoor styling." },
-      { property: "og:title", content: "Garden Services | MyGarden" },
+      { property: "og:title", content: "Garden Services | Jharna Aquarium & Nursery" },
       { property: "og:description", content: "End-to-end garden services, tailored to your space and handled with zero hassle." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -387,7 +387,7 @@ function Page() {
             </div>
 
             <h2 className="mt-4 font-display text-2xl font-extrabold tracking-tight text-forest sm:text-[2rem]">
-              {section.why_title || "Why Choose MyGarden?"}
+              {section.why_title || "Why Choose Jharna Aquarium & Nursery?"}
             </h2>
             <ul className="mt-5 space-y-3.5">
               {whyPoints.map((point) => (

@@ -83,9 +83,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "MyGarden" },
+      { title: "Jharna Aquarium & Nursery" },
       { name: "description", content: "Thoughtfully grown plants and garden essentials, delivered with care." },
-      { name: "author", content: "MyGarden" },
+      { name: "author", content: "Jharna Aquarium & Nursery" },
       { property: "og:image", content: "https://mygarden.ulmind.store/og-image.png" },
       { name: "twitter:image", content: "https://mygarden.ulmind.store/og-image.png" },
     ],

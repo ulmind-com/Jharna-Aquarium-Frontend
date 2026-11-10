@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import type { GardenServiceSection } from "@/types/api";
 
 export const defaultGardenSection: GardenServiceSection = {
-  title: "Garden services by MyGarden",
+  title: "Garden services by Jharna Aquarium & Nursery",
   body: "Our end-to-end Garden Services cover everything from botanical styling and landscape architecture to curated planters and more, all tailored to your vision and handled with zero hassle.",
   image: "/care.png",
   cta_label: "View all Garden Service",

@@ -4,9 +4,9 @@ import { PolicyPage, PolicySection } from "@/components/shared/policy-page";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of Service | MyGarden" },
+      { title: "Terms of Service | Jharna Aquarium & Nursery" },
       { name: "description", content: "The terms that apply when you shop with the nursery." },
-      { property: "og:title", content: "Terms of Service | MyGarden" },
+      { property: "og:title", content: "Terms of Service | Jharna Aquarium & Nursery" },
       { property: "og:description", content: "The terms that apply when you shop with us." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

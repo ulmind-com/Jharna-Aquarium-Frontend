@@ -26,7 +26,7 @@ export const Route = createFileRoute("/product/$id")({
   loader: ({ params }) => productsApi.get(params.id).catch(() => null),
   head: ({ loaderData }) => {
     const product = loaderData as Product | null;
-    const title = product?.title ? `${product.title} | MyGarden` : "Shop this plant | MyGarden";
+    const title = product?.title ? `${product.title} | Jharna Aquarium & Nursery` : "Shop this plant | Jharna Aquarium & Nursery";
     const description =
       product?.short_description ||
       product?.description ||

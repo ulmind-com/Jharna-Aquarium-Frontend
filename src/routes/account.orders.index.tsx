@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/account/orders/")({
   head: () => ({
     meta: [
-      { title: "My Orders | MyGarden" },
+      { title: "My Orders | Jharna Aquarium & Nursery" },
       { name: "description", content: "Track your nursery orders and delivery status." },
-      { property: "og:title", content: "My Orders | MyGarden" },
+      { property: "og:title", content: "My Orders | Jharna Aquarium & Nursery" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

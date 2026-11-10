@@ -1,5 +1,5 @@
 export const brand = {
-  brandName: "MyGarden",
+  brandName: "Jharna Aquarium & Nursery",
   logo: null as string | null,
   favicon: "/favicon.ico",
   primaryColor: "#1F6B4F",
@@ -7,11 +7,11 @@ export const brand = {
   supportPhone: "",
 } as const;
 
-/** The stored shop name was seeded before the rebrand, so treat the old value
- *  as unset until Store Settings is updated. */
-const LEGACY_SHOP_NAME = "Plant Nursery";
+/** Shop names seeded before the rebrand — treat any of these as unset so the
+ *  current brandName is shown until Store Settings is updated. */
+const LEGACY_SHOP_NAMES = ["Plant Nursery", "MyGarden", "My Garden"];
 
 export function displayName(shopName: string | undefined): string {
   const name = shopName?.trim();
-  return !name || name === LEGACY_SHOP_NAME ? brand.brandName : name;
+  return !name || LEGACY_SHOP_NAMES.includes(name) ? brand.brandName : name;
 }

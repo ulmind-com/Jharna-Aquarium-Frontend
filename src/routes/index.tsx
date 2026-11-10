@@ -24,9 +24,9 @@ import type { GoogleReview, Product } from "@/types/api";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Premium Plants Online | MyGarden" },
+      { title: "Premium Plants Online | Jharna Aquarium & Nursery" },
       { name: "description", content: "Shop healthy indoor and outdoor plants, planters, and care essentials from a trusted Indian nursery." },
-      { property: "og:title", content: "Premium Plants Online | MyGarden" },
+      { property: "og:title", content: "Premium Plants Online | Jharna Aquarium & Nursery" },
       { property: "og:description", content: "Thoughtfully grown plants and garden essentials, delivered with care." },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "https://mygarden.ulmind.store/og-image.png" },

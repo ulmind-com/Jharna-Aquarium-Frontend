@@ -41,9 +41,9 @@ export const Route = createFileRoute("/plants")({
   validateSearch: parseSearch,
   head: () => ({
     meta: [
-      { title: "Plants | MyGarden" },
+      { title: "Plants | Jharna Aquarium & Nursery" },
       { name: "description", content: "Explore healthy indoor and outdoor plants for Indian homes." },
-      { property: "og:title", content: "Plants | MyGarden" },
+      { property: "og:title", content: "Plants | Jharna Aquarium & Nursery" },
       { property: "og:description", content: "Explore healthy indoor and outdoor plants for Indian homes." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

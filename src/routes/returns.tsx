@@ -6,9 +6,9 @@ import { PolicyPage, PolicySection } from "@/components/shared/policy-page";
 export const Route = createFileRoute("/returns")({
   head: () => ({
     meta: [
-      { title: "Returns & Plant Guarantee | MyGarden" },
+      { title: "Returns & Plant Guarantee | Jharna Aquarium & Nursery" },
       { name: "description", content: "Returns, replacements, and the nursery plant guarantee." },
-      { property: "og:title", content: "Returns & Plant Guarantee | MyGarden" },
+      { property: "og:title", content: "Returns & Plant Guarantee | Jharna Aquarium & Nursery" },
       { property: "og:description", content: "Returns, replacements, and the nursery plant guarantee." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
