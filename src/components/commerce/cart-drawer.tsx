@@ -4,6 +4,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  Lock,
   Minus,
   Plus,
   ShoppingBag,
@@ -330,8 +331,9 @@ export function CartDrawer() {
               </div>
               <SlideToCheckout onDone={closeCart} className="min-w-0 flex-1" />
             </div>
-            <p className="mt-3 text-center text-[11px] font-medium text-muted-foreground">
-              🔒 100% secure · UPI · Cards · Net banking
+            <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-[11px] font-medium text-muted-foreground">
+              <Lock className="size-3.5 shrink-0" aria-hidden="true" />
+              <span>100% secure · UPI · Cards · Net banking</span>
             </p>
             {showBreakdown && (
               <div className="mt-3 space-y-1 border-t border-border pt-3 text-xs text-muted-foreground">

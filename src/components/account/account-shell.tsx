@@ -47,7 +47,7 @@ export const ACCOUNT_LINKS: AccountLink[] = [
 /** Initials are the fallback avatar — always better than an empty circle. */
 export function initials(name: string | undefined): string {
   const parts = (name ?? "").trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "🌱";
+  if (parts.length === 0) return "";
   return parts
     .slice(0, 2)
     .map((part) => part[0]?.toUpperCase() ?? "")
@@ -59,6 +59,7 @@ export function Avatar({ src, name, size = 56, className }: { src?: string | nul
      broken image icon is worse than no photo at all — fall back to initials. */
   const [broken, setBroken] = useState(false);
   useEffect(() => setBroken(false), [src]);
+  const text = initials(name);
   return (
     <span
       className={`relative grid shrink-0 place-items-center overflow-hidden rounded-full bg-primary-tint ring-2 ring-primary/25 ${className ?? ""}`}
@@ -72,10 +73,12 @@ export function Avatar({ src, name, size = 56, className }: { src?: string | nul
           onError={() => setBroken(true)}
           className="size-full object-cover"
         />
-      ) : (
+      ) : text ? (
         <span className="font-display font-bold text-primary" style={{ fontSize: size * 0.36 }}>
-          {initials(name)}
+          {text}
         </span>
+      ) : (
+        <UserRound className="text-primary" style={{ width: size * 0.45, height: size * 0.45 }} aria-hidden="true" />
       )}
     </span>
   );

@@ -3,7 +3,7 @@ import { tokenStore } from "./token";
 import type { ApiError, ApiValidationDetail } from "@/types/api";
 
 export const api = axios.create({
-  baseURL: import.meta.env["VITE_API_BASE_URL"] || "https://nursery-backend-c8yw.onrender.com",
+  baseURL: import.meta.env["VITE_API_BASE_URL"] || "https://jharna-aquarium-backend.onrender.com",
   timeout: 45000,
   // A multi-select filter sends its values as the same key repeated — which is
   // what FastAPI reads a `list[str]` from. Axios would otherwise write

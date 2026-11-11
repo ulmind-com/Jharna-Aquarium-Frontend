@@ -67,7 +67,7 @@ export function AccountMenu() {
         <div className="flex items-center gap-3 rounded-xl bg-primary-tint px-3 py-3">
           <Avatar src={user.avatar} name={user.name} size={40} />
           <div className="min-w-0">
-            <p className="truncate text-sm font-bold text-forest">Hi {firstName} 👋</p>
+            <p className="truncate text-sm font-bold text-forest">Hi {firstName}</p>
             <p className="truncate text-xs text-muted-foreground">{user.email}</p>
           </div>
         </div>

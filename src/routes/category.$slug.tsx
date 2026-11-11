@@ -38,8 +38,13 @@ function CategoryPage() {
 
   return (
     <div className="bg-storefront-wash">
-      <CategoryHero slug={slug} name={name} image={category?.image} />
-      <CategoryRail activeSlug={slug} />
+      <CategoryHero
+        slug={slug}
+        name={name}
+        image={category?.image}
+        heroImage={category?.hero_image}
+      />
+      <CategoryRail activeSlug={slug} categories={categories.data} />
       <CataloguePage
         title={name}
         params={{ category_id: category?.id || slug }}

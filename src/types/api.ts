@@ -113,9 +113,13 @@ export interface Category {
   name: string;
   slug?: string;
   parent_id?: string | null;
+  blurb?: string;
   description?: string;
   image?: string;
+  hero_image?: string;
   icon?: string;
+  image_scale?: number | null;
+  order?: number;
   children?: Category[];
 }
 export interface Brand {

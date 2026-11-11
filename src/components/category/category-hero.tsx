@@ -82,27 +82,45 @@ export function normalizeCategorySlug(value: string) {
   return aliases[normalized] ?? normalized;
 }
 
-export function getCategoryHero(value: string, fallbackName?: string): CategoryHeroDetails {
+export function getCategoryHero(value: string, fallbackName?: string): CategoryHeroDetails & { hasPreset: boolean } {
   const normalized = normalizeCategorySlug(value);
   const preset = categoryHeroes[normalized];
-  if (preset) return preset;
+  if (preset) return { ...preset, hasPreset: true };
 
   const displayName = fallbackName || value.replaceAll("-", " ");
   return {
     image: categoryPlantsHero,
     title: `Explore ${displayName}`,
     description: "Thoughtfully selected garden essentials for a greener home.",
+    hasPreset: false,
   };
 }
 
-export function CategoryHero({ slug, name, image }: { slug: string; name: string; image?: string | undefined }) {
+export function CategoryHero({
+  slug,
+  name,
+  image,
+  heroImage,
+}: {
+  slug: string;
+  name: string;
+  image?: string | undefined;
+  heroImage?: string | undefined;
+}) {
   const details = getCategoryHero(slug, name);
+  // Keep built-in landscape banners intact unless admin uploads a dedicated hero_image;
+  // new custom categories without a preset banner fall back to their category image or default hero.
+  const bannerSrc = heroImage?.trim()
+    ? heroImage
+    : details.hasPreset
+      ? details.image
+      : image?.trim() || details.image;
 
   return (
     <section className="bg-storefront-wash px-3 pb-5 pt-3 sm:px-6 sm:pb-7 lg:px-9 lg:pb-8 lg:pt-4">
       <div className="relative mx-auto h-[240px] max-w-[1480px] overflow-hidden rounded-2xl bg-background sm:h-[270px] lg:aspect-[4.58/1] lg:h-auto">
         <img
-          src={image || details.image}
+          src={bannerSrc}
           alt=""
           width={1600}
           height={560}

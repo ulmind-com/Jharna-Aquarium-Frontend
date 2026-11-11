@@ -5,20 +5,9 @@
 
 import { Link } from "@tanstack/react-router";
 import { Leaf } from "lucide-react";
+import { CATEGORY_FALLBACKS, resolveCategoryImage } from "@/lib/category-defaults";
 import { navCategories } from "@/lib/nav-categories";
 import type { Category } from "@/types/api";
-
-const fallbackShortcuts = [
-  { name: "Plants", slug: "plants", image: "/images/category-plants.png" },
-  { name: "Pots", slug: "pots", image: "/images/category-pots.png" },
-  { name: "Soil", slug: "soil", image: "/images/category-soil.png" },
-  { name: "Fertilisers", slug: "fertilisers", image: "/images/category-fertilisers.png" },
-  { name: "Seeds", slug: "seeds", image: "/images/category-seeds.png" },
-  { name: "Garden Tools", slug: "garden-tools", image: "/images/category-tools.png" },
-  { name: "Watering Solutions", slug: "watering-solutions", image: "/images/category-watering.png" },
-  { name: "Pest Control", slug: "pest-control", image: "/images/category-pest-control.png" },
-  { name: "Gardening Decor", slug: "gardening-decor", image: "/images/category-decor.png" },
-] as const;
 
 const TILE = "group w-[96px] shrink-0 text-center sm:w-[110px] lg:w-[116px]";
 const TILE_IMG =
@@ -34,11 +23,14 @@ export function CategoryStrip({
   title?: string;
   limit?: number;
 }) {
-  const live = navCategories(categories).slice(0, limit);
+  // Show every live shop category added from admin without dropping categories
+  // added beyond the default row size; pad with bundled artwork only below `limit`.
+  const live = navCategories(categories);
   const liveSlugs = new Set(live.map((cat) => (cat.slug || "").toLowerCase()));
-  const filler = fallbackShortcuts
+  const filler = CATEGORY_FALLBACKS
     .filter((shortcut) => !liveSlugs.has(shortcut.slug))
     .slice(0, Math.max(0, limit - live.length));
+  const totalTiles = live.length + filler.length;
 
   return (
     <section className="mt-6 min-w-0 overflow-hidden bg-forest px-3 py-5 sm:px-6 sm:py-7 lg:mt-8 lg:px-9 lg:py-8">
@@ -48,21 +40,35 @@ export function CategoryStrip({
         </h2>
       )}
       <div className="mx-auto w-full min-w-0 max-w-full overflow-x-auto overscroll-x-contain pb-4 [scrollbar-width:none] lg:max-w-[1480px] [&::-webkit-scrollbar]:hidden">
-        <div className="flex w-max min-w-full justify-start gap-4 px-2 sm:gap-6 lg:justify-center lg:gap-6">
-          {live.map((cat) => (
-            <Link key={cat.id} to="/category/$slug" params={{ slug: cat.slug || cat.id }} className={TILE}>
-              <div className={TILE_IMG}>
-                {cat.image ? (
-                  <img src={cat.image} alt={cat.name} loading="lazy" className="size-full object-contain" />
-                ) : (
-                  <span className="flex size-full items-center justify-center rounded-full bg-primary-tint">
-                    <Leaf className="size-8 text-primary" />
-                  </span>
-                )}
-              </div>
-              <h3 className={TILE_LABEL}>{cat.name}</h3>
-            </Link>
-          ))}
+        <div
+          className={`flex w-max min-w-full justify-start gap-4 px-2 sm:gap-6 lg:gap-6 ${
+            totalTiles <= 9 ? "lg:justify-center" : "lg:justify-start"
+          }`}
+        >
+          {live.map((cat) => {
+            const imgSrc = resolveCategoryImage(cat.slug || cat.name, cat.image);
+            const scale = typeof cat.image_scale === "number" && cat.image_scale > 0 && cat.image_scale !== 1 ? cat.image_scale : null;
+            return (
+              <Link key={cat.id} to="/category/$slug" params={{ slug: cat.slug || cat.id }} className={TILE}>
+                <div className={TILE_IMG}>
+                  {imgSrc ? (
+                    <img
+                      src={imgSrc}
+                      alt={cat.name}
+                      loading="lazy"
+                      className="size-full object-contain"
+                      style={scale ? { transform: `scale(${scale})` } : undefined}
+                    />
+                  ) : (
+                    <span className="flex size-full items-center justify-center rounded-full bg-primary-tint">
+                      <Leaf className="size-8 text-primary" />
+                    </span>
+                  )}
+                </div>
+                <h3 className={TILE_LABEL}>{cat.name}</h3>
+              </Link>
+            );
+          })}
 
           {filler.map(({ name, slug, image }) => (
             <Link key={name} to="/category/$slug" params={{ slug }} className={TILE}>

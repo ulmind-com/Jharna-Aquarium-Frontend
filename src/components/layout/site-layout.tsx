@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Heart, Home, LayoutGrid, Menu, Search, ShoppingBag, UserRound } from "lucide-react";
 import { memo, type ReactNode, useEffect, useState } from "react";
 import { categoriesApi, queryKeys, settingsApi } from "@/api/services";
+import { DEFAULT_CATEGORY_SLUGS } from "@/lib/category-defaults";
 import { navCategories } from "@/lib/nav-categories";
 import { displayName } from "@/config/brand";
 import { BrandLogo } from "@/components/layout/brand-logo";
@@ -173,12 +174,17 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   const { data: allCategories = [] } = useQuery({
     queryKey: queryKeys.categories,
     queryFn: categoriesApi.list,
-    staleTime: 300_000,
+    staleTime: 30_000,
   });
   /* Home-section trees (Shop by Space) stay out of the shop navigation */
   const categories = navCategories(allCategories);
   const extraCategories = categories
     .filter((cat) => !NAV_SLUGS.has((cat.slug || "").toLowerCase()))
+    .sort((a, b) => {
+      const aCustom = !DEFAULT_CATEGORY_SLUGS.has((a.slug || "").toLowerCase());
+      const bCustom = !DEFAULT_CATEGORY_SLUGS.has((b.slug || "").toLowerCase());
+      return aCustom === bCustom ? 0 : aCustom ? -1 : 1;
+    })
     .slice(0, 3);
 
   const whatsapp = settings?.support?.whatsapp || "918537861040";
@@ -242,9 +248,9 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               {categories.length > 0 && (
                 <div className="px-6 py-4">
                   <p className="mb-3 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                    Popular categories
+                    All categories
                   </p>
-                  {categories.slice(0, 6).map((cat) => (
+                  {categories.map((cat) => (
                     <Link
                       key={cat.id}
                       to="/category/$slug"

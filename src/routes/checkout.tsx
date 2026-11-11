@@ -1169,8 +1169,9 @@ function CheckoutPage() {
                 </p>
               )}
               {quote && quote.discount > 0 && (
-                <p className="text-right text-xs font-semibold text-[#008B5E]">
-                  You save {inr(quote.discount)} on this order 🌿
+                <p className="flex items-center justify-end gap-1.5 text-xs font-semibold text-[#008B5E]">
+                  <span>You save {inr(quote.discount)} on this order</span>
+                  <Leaf className="size-3.5 shrink-0" aria-hidden="true" />
                 </p>
               )}
             </div>
