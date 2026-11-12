@@ -138,7 +138,7 @@ export function BrandComparisonSection({
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
             <DecorativeLottie
               {...LOTTIE_ACCENTS.pottedPlant}
-              className="hidden aspect-[1050/2149] w-9 shrink-0 sm:block lg:w-12"
+              className="hidden aspect-[1050/2149] w-10 shrink-0 sm:block lg:w-12"
             />
             <h2
               id="brand-comparison-title"
@@ -148,7 +148,7 @@ export function BrandComparisonSection({
             </h2>
             <DecorativeLottie
               {...LOTTIE_ACCENTS.aquarium}
-              className="hidden size-14 shrink-0 sm:block lg:size-20"
+              className="hidden size-20 shrink-0 sm:block lg:size-28"
             />
           </div>
           <div className="mt-3 sm:hidden">

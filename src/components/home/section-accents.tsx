@@ -58,7 +58,7 @@ export function DecorativeLottie({
           speed={speed}
           {...(segment ? { segment } : {})}
           backgroundColor="transparent"
-          className="size-full"
+          className="block size-full"
           dotLottieRefCallback={(player) => {
             player?.addEventListener("loadError", () => setFailed(true));
           }}
@@ -70,14 +70,14 @@ export function DecorativeLottie({
 
 export function DualTitleAccents(_props?: { variant?: "light" | "dark" }) {
   return (
-    <span className="inline-flex items-center gap-2.5 align-middle" aria-hidden="true">
+    <span className="inline-flex items-center gap-3 align-middle" aria-hidden="true">
       <DecorativeLottie
         {...LOTTIE_ACCENTS.pottedPlant}
-        className="aspect-[1050/2149] w-7 sm:w-8"
+        className="aspect-[1050/2149] w-8 sm:w-9"
       />
       <DecorativeLottie
         {...LOTTIE_ACCENTS.aquarium}
-        className="size-11 sm:size-12"
+        className="size-16 sm:size-20"
       />
     </span>
   );

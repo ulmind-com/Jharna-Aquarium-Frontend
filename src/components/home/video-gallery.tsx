@@ -55,14 +55,14 @@ export function VideoGallery({
     <section ref={sectionRef} className="relative overflow-hidden pb-16 pt-12 sm:py-16 lg:pb-24 lg:pt-16">
       <DecorativeLottie
         {...LOTTIE_ACCENTS.hangingPlant}
-        className="absolute left-1 top-0 z-0 size-16 sm:left-4 sm:size-28 lg:left-8 lg:size-36"
+        className="absolute left-1 top-2 z-0 size-20 sm:left-4 sm:top-3 sm:size-28 lg:left-8 lg:top-4 lg:size-36"
       />
       <DecorativeLottie
         {...LOTTIE_ACCENTS.pottedPlant}
         className="absolute bottom-1 right-2 z-0 aspect-[1050/2149] w-11 sm:bottom-2 sm:right-5 sm:w-16 lg:right-9 lg:w-20"
       />
       <div className="relative z-10 mx-auto max-w-[1480px] px-4 sm:px-6 lg:px-10">
-        <div className="mb-10 px-14 text-center sm:px-28">
+        <div className="mb-10 px-16 text-center sm:px-28">
           <h2 className="font-display text-3xl font-extrabold text-forest sm:text-4xl lg:text-[2.75rem]">{title}</h2>
           {subtitle && <p className="mt-4 text-base text-muted-foreground sm:text-lg">{subtitle}</p>}
         </div>
