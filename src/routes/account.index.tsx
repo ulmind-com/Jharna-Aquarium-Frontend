@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Headset, Package } from "lucide-react";
-import { ordersApi, queryKeys, reviewsApi, wishlistApi } from "@/api/services";
+import { ordersApi, queryKeys, reviewsApi } from "@/api/services";
 import { ACCOUNT_LINKS, AccountShell } from "@/components/account/account-shell";
 import { OrderStatusPill } from "@/components/account/order-bits";
 import { money } from "@/components/product/product-card";
 import { useAuth } from "@/contexts/auth-context";
 import { useSupportChat } from "@/contexts/support-chat-context";
+import { useWishlist } from "@/contexts/wishlist-context";
 
 export const Route = createFileRoute("/account/")({
   head: () => ({
@@ -34,13 +35,12 @@ function Overview() {
   const { user } = useAuth();
   const support = useSupportChat();
   const orders = useQuery({ queryKey: queryKeys.orders, queryFn: ordersApi.list, enabled: Boolean(user) });
-  const wishlist = useQuery({ queryKey: queryKeys.wishlist, queryFn: wishlistApi.ids, enabled: Boolean(user) });
+  const { totalCount: saved } = useWishlist();
   const reviews = useQuery({ queryKey: queryKeys.myReviews, queryFn: reviewsApi.mine, enabled: Boolean(user) });
 
   const all = orders.data ?? [];
   const recent = all.slice(0, 3);
   const inFlight = all.filter((o) => !["delivered", "cancelled"].includes(o.status)).length;
-  const saved = Array.isArray(wishlist.data) ? wishlist.data.length : wishlist.data?.ids?.length ?? 0;
 
   /* Overview doubles as the phone's menu, so every section is one tap away
      here too — the rail above is a strip, not a full list, on a small screen. */

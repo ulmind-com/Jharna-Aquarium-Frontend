@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/contexts/auth-context";
+import { useWishlist } from "@/contexts/wishlist-context";
 
 const LINKS = [
   { to: "/account", label: "My account", icon: UserRound },
@@ -29,6 +30,7 @@ const LINKS = [
 
 export function AccountMenu() {
   const { user, isAuthenticated, logout } = useAuth();
+  const { totalCount: wishlistCount } = useWishlist();
   const navigate = useNavigate();
 
   if (!isAuthenticated || !user) {
@@ -75,9 +77,14 @@ export function AccountMenu() {
         <div className="mt-1.5">
           {LINKS.map(({ to, label, icon: Icon }) => (
             <DropdownMenuItem key={to} asChild className="rounded-xl px-3 py-2.5">
-              <Link to={to}>
+              <Link to={to} className="flex w-full items-center gap-2">
                 <Icon className="size-4 text-primary" />
                 <span className="text-sm font-semibold">{label}</span>
+                {to === "/wishlist" && wishlistCount > 0 && (
+                  <span className="ml-auto rounded-full bg-rose-100 px-2 py-0.5 text-[11px] font-bold text-rose-600">
+                    {wishlistCount}
+                  </span>
+                )}
               </Link>
             </DropdownMenuItem>
           ))}

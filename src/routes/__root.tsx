@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/contexts/auth-context";
 import { CartProvider } from "@/contexts/cart-context";
+import { WishlistProvider } from "@/contexts/wishlist-context";
 import { SupportChatProvider } from "@/contexts/support-chat-context";
 import { SiteLayout } from "@/components/layout/site-layout";
 
@@ -84,10 +85,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Jharna Aquarium & Nursery" },
-      { name: "description", content: "Thoughtfully grown plants and garden essentials, delivered with care." },
+      { name: "description", content: "Healthy indoor plants, ornamental fish, aquariums, birds, pet nutrition, pots and soil essentials — Jharna Aquarium & Nursery." },
       { name: "author", content: "Jharna Aquarium & Nursery" },
-      { property: "og:image", content: "https://mygarden.ulmind.store/og-image.png" },
-      { name: "twitter:image", content: "https://mygarden.ulmind.store/og-image.png" },
+      { property: "og:image", content: "/assets/jharna-logo.png" },
+      { name: "twitter:image", content: "/assets/jharna-logo.png" },
     ],
     links: [
       {
@@ -125,7 +126,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider><CartProvider><SupportChatProvider><SiteLayout><Outlet /></SiteLayout><Toaster position="top-center" richColors /></SupportChatProvider></CartProvider></AuthProvider>
+      <AuthProvider><WishlistProvider><CartProvider><SupportChatProvider><SiteLayout><Outlet /></SiteLayout><Toaster position="top-center" richColors /></SupportChatProvider></CartProvider></WishlistProvider></AuthProvider>
     </QueryClientProvider>
   );
 }

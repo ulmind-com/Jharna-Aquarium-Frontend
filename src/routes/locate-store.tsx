@@ -7,10 +7,10 @@ import { StoreLocatorSection, storesFromApi } from "@/components/home/store-loca
 export const Route = createFileRoute("/locate-store")({
   head: () => ({
     meta: [
-      { title: "Locate a Store | Jharna Aquarium & Nursery" },
-      { name: "description", content: "Find your nearest Jharna Aquarium & Nursery store — addresses, directions and opening hours, city by city." },
-      { property: "og:title", content: "Locate a Store | Jharna Aquarium & Nursery" },
-      { property: "og:description", content: "Every Jharna Aquarium & Nursery store, city by city." },
+      { title: "Visit Our Store | Jharna Aquarium & Nursery" },
+      { name: "description", content: "Visit Jharna Aquarium & Nursery — healthy plants, exotic aquarium fish, birds, pet nutrition and gardening essentials." },
+      { property: "og:title", content: "Visit Our Store | Jharna Aquarium & Nursery" },
+      { property: "og:description", content: "Visit Jharna Aquarium & Nursery for in-person advice on plants, aquariums and pet care." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -28,23 +28,21 @@ function Page() {
         <div className="mx-auto max-w-[1480px] px-4 sm:px-6 lg:px-10">
           <span className="inline-flex items-center gap-2 rounded-full bg-star px-4 py-1.5 font-display text-xs font-bold text-forest sm:text-sm">
             <MapPin className="size-3.5" aria-hidden="true" />
-            Walk in, look around, take one home
+            Walk in, explore &amp; take nature home
           </span>
           <h1 className="mt-5 font-display text-[2rem] font-extrabold tracking-tight text-white sm:text-[2.75rem] lg:text-[3.25rem]">
-            Locate a store
+            Visit Jharna Aquarium &amp; Nursery
           </h1>
           <p className="mx-auto mt-4 max-w-[46rem] text-sm leading-7 text-white/85 sm:text-base sm:leading-8">
-            Pick your city to see every Jharna Aquarium & Nursery store, with directions one tap away. Our teams can help with plant
-            choice, repotting and after-care in person.
+            Step into our store for healthy indoor and outdoor plants, colorful ornamental fish, aquascaping tanks, birds, wholesome pet food, pots, soil and coco peat — with direct personal guidance.
           </p>
         </div>
       </section>
 
-      {/* The home page strip does the city tabs and cards, so the page reuses it whole */}
       <StoreLocatorSection
-        stores={stores}
-        title="Find your nearest store"
-        subtitle="Tap a store to open it in maps. Hours and phone numbers are listed on each card where we have them."
+        stores={stores.slice(0, 1)}
+        title="Visit Our Flagship Store"
+        subtitle="Open for walk-ins, live stock selection, tank setups and plant care advice."
       />
     </div>
   );

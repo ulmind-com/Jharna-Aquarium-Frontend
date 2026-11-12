@@ -1,4 +1,5 @@
 import { Check, X } from "lucide-react";
+import { DualTitleAccents } from "@/components/home/section-accents";
 
 type CellStatus = "positive" | "negative" | "mixed";
 
@@ -130,12 +131,36 @@ export function BrandComparisonSection({
   return (
     <section className="bg-storefront-wash py-14 lg:py-20" aria-labelledby="brand-comparison-title">
       <div className="mx-auto max-w-[1480px] px-4 sm:px-6 lg:px-10">
-        <h2
-          id="brand-comparison-title"
-          className="text-center font-display text-[2rem] font-extrabold tracking-tight text-forest sm:text-[2.75rem] lg:text-[3.5rem]"
-        >
-          {title}
-        </h2>
+        <div className="flex flex-col items-center text-center">
+          <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-forest/15 bg-white px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-forest shadow-xs">
+            Aquarium &amp; Botanical Excellence
+          </span>
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            <img
+              src="/images/accent-tree.png"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="hidden size-12 rounded-2xl border border-forest/15 bg-white object-cover shadow-sm sm:block lg:size-14"
+            />
+            <h2
+              id="brand-comparison-title"
+              className="text-center font-display text-[1.85rem] font-extrabold tracking-tight text-forest sm:text-[2.5rem] lg:text-[3.2rem]"
+            >
+              {title}
+            </h2>
+            <img
+              src="/images/accent-aquarium.png"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="hidden size-12 rounded-2xl border border-forest/15 bg-white object-cover shadow-sm sm:block lg:size-14"
+            />
+          </div>
+          <div className="mt-3 sm:hidden">
+            <DualTitleAccents />
+          </div>
+        </div>
 
         {/* Desktop / tablet: one table, featured column raised above the rest */}
         <div className="relative mx-auto mt-10 hidden max-w-[1180px] pb-6 pt-6 sm:block lg:mt-14">

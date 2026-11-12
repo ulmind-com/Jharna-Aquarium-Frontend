@@ -102,6 +102,7 @@ export interface Product {
   rating?: number;
   review_count?: number;
   sold_count?: number;
+  wishlist_count?: number;
   is_active?: boolean;
   is_featured?: boolean;
   is_bestseller?: boolean;
@@ -130,6 +131,7 @@ export interface Brand {
 }
 export interface Banner {
   id: string;
+  badge?: string;
   title?: string;
   subtitle?: string;
   image?: string;
@@ -146,8 +148,12 @@ export interface PageSectionItem {
   video?: string;
   poster?: string;
   lottie?: string;
+  badge?: string;
   title?: string;
   subtitle?: string;
+  description?: string;
+  cta_label?: string;
+  cta_url?: string;
   link?: string;
   label?: string;
   [key: string]: unknown;
@@ -507,7 +513,11 @@ export interface GoogleReview {
 }
 export interface Wishlist {
   ids: string[];
-  items: Product[];
+  products: Product[];
+  items?: Product[];
+  count?: number;
+  total_amount?: number;
+  total_mrp?: number;
 }
 export interface Recommendation {
   title?: string;

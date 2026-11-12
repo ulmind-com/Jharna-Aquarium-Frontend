@@ -1522,7 +1522,7 @@ function TrustList() {
 
   return (
     <section className="mt-10">
-      <h2 className="text-base font-bold">Trusted by plant parents across India</h2>
+      <h2 className="text-base font-bold">Trusted by plant &amp; pet parents every day</h2>
       <ul className="mt-5 space-y-5">
         {trust.map(({ icon: Icon, title, detail }) => (
           <li key={title} className="flex items-start gap-4">

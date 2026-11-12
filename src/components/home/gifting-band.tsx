@@ -5,7 +5,7 @@ export const defaultGifting: GiftingSection = {
   active: true,
   title: "Green gifting,\nmade easy.",
   body: "Festive hampers. Onboarding kits. Office refreshes. GST invoicing. A dedicated account manager.",
-  brands_line: "Trusted by 50+ brands across India",
+  brands_line: "Trusted by homes, offices & pet lovers",
   image: "/cta.png",
   primary_label: "Shop Hampers",
   primary_url: "/combos",

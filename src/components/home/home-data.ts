@@ -72,7 +72,6 @@ export const FALLBACK_HOME_SECTIONS: PageSection[] = [
   "farm_to_home",
   "comparison",
   "grow_banner",
-  "store_locator",
   "garden_services",
   "gifting",
   "press",

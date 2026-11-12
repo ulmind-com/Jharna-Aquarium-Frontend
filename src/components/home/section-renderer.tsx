@@ -99,8 +99,24 @@ export function SectionRenderer({ section, ctx }: { section: PageSection; ctx: H
   const withImage = items.filter((item) => str(item, "image"));
 
   switch (section.type) {
-    case "hero":
-      return <HeroCarousel banners={ctx.banners} shopName={ctx.shopName} />;
+    case "hero": {
+      const pageSlides = items
+        .filter((item) => str(item, "image") || str(item, "video"))
+        .map((item, index) => ({
+          id: str(item, "id") || `hero-slide-${index}`,
+          ...defined({
+            image: str(item, "image") || undefined,
+            video: str(item, "video") || undefined,
+            poster: str(item, "poster") || undefined,
+            badge: str(item, "badge") || undefined,
+            title: str(item, "title") || undefined,
+            subtitle: str(item, "subtitle") || undefined,
+            cta_label: str(item, "cta_label") || str(item, "ctaLabel") || undefined,
+            cta_url: str(item, "cta_url") || str(item, "link") || undefined,
+          }),
+        }));
+      return <HeroCarousel banners={pageSlides.length > 0 ? pageSlides : ctx.banners} shopName={ctx.shopName} />;
+    }
 
     case "category_strip":
       return (
@@ -167,12 +183,21 @@ export function SectionRenderer({ section, ctx }: { section: PageSection; ctx: H
     }
 
     case "spotlight": {
-      const promos = withImage.map((item, index) => ({
-        id: str(item, "id") || `spotlight-${index}`,
-        image: str(item, "image"),
-        link: str(item, "link") || "/plants",
-        alt: str(item, "title"),
-      }));
+      const promos = withImage.map((item, index) => {
+        const promoTitle = str(item, "title");
+        return {
+          id: str(item, "id") || `spotlight-${index}`,
+          image: str(item, "image"),
+          link: str(item, "link") || "/plants",
+          alt: promoTitle || `Spotlight banner ${index + 1}`,
+          ...defined({
+            badge: str(item, "badge") || undefined,
+            title: promoTitle || undefined,
+            description: str(item, "description") || undefined,
+            ctaLabel: str(item, "cta_label") || str(item, "ctaLabel") || undefined,
+          }),
+        };
+      });
       return <SpotlightSection promos={promos.length > 0 ? promos : defaultSpotlightPromos} {...defined({ title: text(section.title), subtitle: text(section.subtitle) })} />;
     }
 
@@ -253,8 +278,6 @@ export function SectionRenderer({ section, ctx }: { section: PageSection; ctx: H
       return <StorefrontProductGrid products={ctx.products} limit={count(section.limit, 6)} />;
 
     case "shop_by_space": {
-      /* The category tree wins when it exists, so the tiles and the products
-         behind them stay in step; the stored tiles are the fallback. */
       const fromTree = spaceCardsFromCategories(ctx.categoryTree);
       const stored = withImage.map((item, index) => ({
         id: str(item, "id") || `space-${index}`,
@@ -262,7 +285,7 @@ export function SectionRenderer({ section, ctx }: { section: PageSection; ctx: H
         image: str(item, "image"),
         link: str(item, "link") || "/plants",
       }));
-      const spaces = fromTree.length > 0 ? fromTree : stored.length > 0 ? stored : defaultSpaceCards;
+      const spaces = stored.length > 0 ? stored : fromTree.length > 0 ? fromTree : defaultSpaceCards;
       return <ShopBySpaceSection spaces={spaces} {...defined({ title: text(section.title) })} />;
     }
 
@@ -374,12 +397,8 @@ export function SectionRenderer({ section, ctx }: { section: PageSection; ctx: H
     }
 
     case "store_locator":
-      return (
-        <StoreLocatorSection
-          stores={storesFromApi(ctx.stores)}
-          {...defined({ title: text(section.title), subtitle: text(section.subtitle) })}
-        />
-      );
+      /* Single flagship location — multi-store finder section removed from home */
+      return null;
 
     case "garden_services":
       return <GardenServicesBand section={ctx.gardenServices} />;

@@ -5,6 +5,7 @@
 
 import { Link } from "@tanstack/react-router";
 import { Leaf } from "lucide-react";
+import { DualTitleAccents } from "@/components/home/section-accents";
 import { CATEGORY_FALLBACKS, resolveCategoryImage } from "@/lib/category-defaults";
 import { navCategories } from "@/lib/nav-categories";
 import type { Category } from "@/types/api";
@@ -35,9 +36,12 @@ export function CategoryStrip({
   return (
     <section className="mt-6 min-w-0 overflow-hidden bg-forest px-3 py-5 sm:px-6 sm:py-7 lg:mt-8 lg:px-9 lg:py-8">
       {title && (
-        <h2 className="mb-6 text-center font-display text-[2rem] font-bold text-white sm:mb-8 sm:text-[2.75rem] lg:text-[3.25rem]">
-          {title}
-        </h2>
+        <div className="mb-6 flex flex-wrap items-center justify-center gap-3 text-center sm:mb-8">
+          <DualTitleAccents variant="dark" />
+          <h2 className="font-display text-[2rem] font-bold text-white sm:text-[2.75rem] lg:text-[3.25rem]">
+            {title}
+          </h2>
+        </div>
       )}
       <div className="mx-auto w-full min-w-0 max-w-full overflow-x-auto overscroll-x-contain pb-4 [scrollbar-width:none] lg:max-w-[1480px] [&::-webkit-scrollbar]:hidden">
         <div

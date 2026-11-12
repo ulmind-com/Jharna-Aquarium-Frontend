@@ -24,14 +24,14 @@ import type { GoogleReview, Product } from "@/types/api";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Premium Plants Online | Jharna Aquarium & Nursery" },
-      { name: "description", content: "Shop healthy indoor and outdoor plants, planters, and care essentials from a trusted Indian nursery." },
-      { property: "og:title", content: "Premium Plants Online | Jharna Aquarium & Nursery" },
-      { property: "og:description", content: "Thoughtfully grown plants and garden essentials, delivered with care." },
+      { title: "Plants, Aquariums, Birds & Supplies | Jharna Aquarium & Nursery" },
+      { name: "description", content: "Shop healthy indoor and outdoor plants, exotic fish, aquarium setups, birds, pet food, pots, soil and coco peat at Jharna Aquarium & Nursery." },
+      { property: "og:title", content: "Plants, Aquariums, Birds & Supplies | Jharna Aquarium & Nursery" },
+      { property: "og:description", content: "Thoughtfully curated plants, aquariums, pet care and gardening essentials under one roof." },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://mygarden.ulmind.store/og-image.png" },
+      { property: "og:image", content: "/assets/jharna-logo.png" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "https://mygarden.ulmind.store/og-image.png" },
+      { name: "twitter:image", content: "/assets/jharna-logo.png" },
     ],
   }),
   component: HomePage,

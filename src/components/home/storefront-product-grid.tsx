@@ -6,6 +6,7 @@ import {
   quickAddFromProduct,
   type QuickAddItem,
 } from "@/components/product/cart-actions";
+import { WishlistHeartButton } from "@/components/product/wishlist-heart-button";
 import type { Product, ProductSize } from "@/types/api";
 
 function liveProductDetails(product: Product) {
@@ -35,34 +36,41 @@ function LiveProductCard({ product }: { product: Product }) {
   const { image, price, mrp } = liveProductDetails(product);
   return (
     <article className="group min-w-0 overflow-hidden rounded-xl bg-card @container">
-      <Link
-        to="/product/$id"
-        params={{ id: product.id }}
-        className="relative block aspect-square overflow-hidden bg-muted"
-      >
-        {image ? (
-          <img
-            src={image}
-            alt={product.title}
-            width={768}
-            height={960}
-            loading="lazy"
-            className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.025]"
-          />
-        ) : (
-          <span className="flex size-full items-center justify-center px-4 text-center text-xs text-muted-foreground">
-            Image coming soon
-          </span>
-        )}
-        {product.is_bestseller && (
-          <span className="absolute left-2 top-2 rounded-md bg-star px-2 py-1 text-[9px] font-bold uppercase text-foreground shadow-sm sm:left-3 sm:top-3 sm:text-[10px]">
-            Bestseller
-          </span>
-        )}
-        {Boolean(product.rating) && (
-          <RatingStrip rating={product.rating ?? 0} reviews={product.review_count ?? 0} />
-        )}
-      </Link>
+      <div className="relative aspect-square overflow-hidden bg-muted">
+        <Link
+          to="/product/$id"
+          params={{ id: product.id }}
+          className="block size-full"
+        >
+          {image ? (
+            <img
+              src={image}
+              alt={product.title}
+              width={768}
+              height={960}
+              loading="lazy"
+              className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+            />
+          ) : (
+            <span className="flex size-full items-center justify-center px-4 text-center text-xs text-muted-foreground">
+              Image coming soon
+            </span>
+          )}
+          {product.is_bestseller && (
+            <span className="absolute left-2 top-2 rounded-md bg-star px-2 py-1 text-[9px] font-bold uppercase text-foreground shadow-sm sm:left-3 sm:top-3 sm:text-[10px]">
+              Bestseller
+            </span>
+          )}
+          {Boolean(product.rating) && (
+            <RatingStrip rating={product.rating ?? 0} reviews={product.review_count ?? 0} />
+          )}
+        </Link>
+        <WishlistHeartButton
+          product={product}
+          variant="icon-float"
+          className="absolute bottom-2 right-2 z-10"
+        />
+      </div>
       <div className="p-3 sm:p-4">
         <Link to="/product/$id" params={{ id: product.id }} className="block">
           <h3 className="line-clamp-1 text-base text-forest transition-colors hover:text-primary sm:text-xl">

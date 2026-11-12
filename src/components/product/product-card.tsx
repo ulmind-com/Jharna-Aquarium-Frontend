@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Flower2, Heart, Leaf, PawPrint, Sparkles, Star, Wind } from "lucide-react";
+import { Flower2, Leaf, PawPrint, Sparkles, Star, Wind } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { AddToBasketButton, type QuickAddItem } from "@/components/product/cart-actions";
+import { WishlistHeartButton } from "@/components/product/wishlist-heart-button";
 import { LOTTIE_ICONS } from "@/components/shared/lottie-icon";
 import type { Product, ProductSize } from "@/types/api";
 
@@ -91,53 +92,57 @@ export function ProductCard({ product }: { product: Product }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Link
-        to="/product/$id"
-        params={{ id: product.id }}
-        className="relative block aspect-square overflow-hidden rounded-2xl bg-primary-tint"
-      >
-        {image ? (
-          <img
-            src={image}
-            alt={product.title}
-            loading="lazy"
-            className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-          />
-        ) : (
-          <span className="flex size-full items-center justify-center text-sm text-muted-foreground">
-            Image coming soon
-          </span>
-        )}
-
-        <div className="absolute left-3 top-3 flex flex-col gap-1.5">
-          {product.is_bestseller && (
-            <span className="rounded-full bg-[#c8794f] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-sm">
-              Bestseller
+      <div className="relative aspect-square overflow-hidden rounded-2xl bg-primary-tint">
+        <Link
+          to="/product/$id"
+          params={{ id: product.id }}
+          className="block size-full"
+        >
+          {image ? (
+            <img
+              src={image}
+              alt={product.title}
+              loading="lazy"
+              className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+            />
+          ) : (
+            <span className="flex size-full items-center justify-center text-sm text-muted-foreground">
+              Image coming soon
             </span>
           )}
-          {product.is_new_arrival && (
-            <span className="rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-forest shadow-sm">
-              New
+
+          <div className="absolute left-3 top-3 flex flex-col gap-1.5">
+            {product.is_bestseller && (
+              <span className="rounded-full bg-[#c8794f] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-sm">
+                Bestseller
+              </span>
+            )}
+            {product.is_new_arrival && (
+              <span className="rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-forest shadow-sm">
+                New
+              </span>
+            )}
+          </div>
+
+          {discount > 0 && (
+            <span className="absolute right-3 top-3 rounded-full bg-forest px-2.5 py-1 text-[11px] font-bold text-forest-foreground shadow-sm">
+              {discount}% OFF
             </span>
           )}
-        </div>
 
-        {discount > 0 && (
-          <span className="absolute right-3 top-3 rounded-full bg-forest px-2.5 py-1 text-[11px] font-bold text-forest-foreground shadow-sm">
-            {discount}% OFF
-          </span>
-        )}
+          {stock < 1 && (
+            <span className="absolute inset-x-0 bottom-0 bg-foreground/80 py-1.5 text-center text-[11px] font-semibold text-background">
+              Out of stock
+            </span>
+          )}
+        </Link>
 
-        <span className="absolute bottom-3 right-3 flex size-9 translate-y-2 items-center justify-center rounded-full bg-white/95 text-forest opacity-0 shadow-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-          <DotLottieReact src={LOTTIE_ICONS.heartBeat} loop autoplay className="size-6" />
-        </span>
-
-        {stock < 1 && (
-          <span className="absolute inset-x-0 bottom-0 bg-foreground/80 py-1.5 text-center text-[11px] font-semibold text-background">
-            Out of stock
-          </span>
-        )}
-      </Link>
+        <WishlistHeartButton
+          product={product}
+          variant="icon-float"
+          className="absolute bottom-3 right-3 z-10"
+        />
+      </div>
 
       <div className="flex flex-1 flex-col px-1 pb-1 pt-3 sm:px-2">
         <div className="flex items-center gap-1.5">

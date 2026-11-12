@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight, ShoppingBag, Star } from "lucide-react";
 import { useRef, useState } from "react";
 import { money } from "@/components/product/product-card";
+import { WishlistHeartButton } from "@/components/product/wishlist-heart-button";
 import type { Product, ProductSize } from "@/types/api";
 
 const DEFAULT_PERSON_IMAGE = "/images/bhidu-person.png";
@@ -30,6 +31,7 @@ function discountPct(price: number, mrp: number | undefined | null): number {
 
 /* ── Product card (matches the reference layout) ── */
 function BhiduProductCard({
+  product,
   title,
   image,
   subtitle,
@@ -41,6 +43,7 @@ function BhiduProductCard({
   isBestseller,
   productId,
 }: {
+  product: Product;
   title: string;
   image?: string;
   subtitle: string;
@@ -55,46 +58,53 @@ function BhiduProductCard({
   return (
     <article className="group flex w-[72vw] max-w-[270px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-white shadow-[0_2px_14px_rgba(0,0,0,0.06)] sm:w-[240px] sm:max-w-none lg:w-[calc((100%-2.5rem)/3)]">
       {/* Image area */}
-      <Link
-        to="/product/$id"
-        params={{ id: productId }}
-        className="relative block aspect-square overflow-hidden bg-[#f4e7d3]"
-      >
-        {image ? (
-          <img
-            src={image}
-            alt={title}
-            width={520}
-            height={520}
-            loading="lazy"
-            className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <span className="flex size-full items-center justify-center text-xs text-muted-foreground">
-            Image coming soon
-          </span>
-        )}
+      <div className="relative aspect-square overflow-hidden bg-[#f4e7d3]">
+        <Link
+          to="/product/$id"
+          params={{ id: productId }}
+          className="block size-full"
+        >
+          {image ? (
+            <img
+              src={image}
+              alt={title}
+              width={520}
+              height={520}
+              loading="lazy"
+              className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <span className="flex size-full items-center justify-center text-xs text-muted-foreground">
+              Image coming soon
+            </span>
+          )}
 
-        {isBestseller && (
-          <span className="absolute left-2.5 top-2.5 rounded-md bg-[#f5c518] px-2 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.04em] text-[#1c1c1c]">
-            Bestseller
-          </span>
-        )}
-        {discount > 0 && (
-          <span className="absolute right-2.5 top-2.5 rounded-md bg-[#d43c2c] px-2 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.04em] text-white">
-            {discount}% off
-          </span>
-        )}
+          {isBestseller && (
+            <span className="absolute left-2.5 top-2.5 rounded-md bg-[#f5c518] px-2 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.04em] text-[#1c1c1c]">
+              Bestseller
+            </span>
+          )}
+          {discount > 0 && (
+            <span className="absolute right-2.5 top-2.5 rounded-md bg-[#d43c2c] px-2 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.04em] text-white">
+              {discount}% off
+            </span>
+          )}
 
-        {rating > 0 && (
-          <span className="absolute bottom-2.5 left-2.5 inline-flex h-[24px] items-center gap-1 rounded-md bg-white px-2 text-[11px] shadow-sm">
-            <strong className="font-bold text-[#1c1c1c]">{rating.toFixed(1)}</strong>
-            <Star className="size-2.5 fill-forest text-forest" />
-            <span className="mx-0.5 h-3 w-px bg-border" />
-            <span className="text-muted-foreground">{reviews}</span>
-          </span>
-        )}
-      </Link>
+          {rating > 0 && (
+            <span className="absolute bottom-2.5 left-2.5 inline-flex h-[24px] items-center gap-1 rounded-md bg-white px-2 text-[11px] shadow-sm">
+              <strong className="font-bold text-[#1c1c1c]">{rating.toFixed(1)}</strong>
+              <Star className="size-2.5 fill-forest text-forest" />
+              <span className="mx-0.5 h-3 w-px bg-border" />
+              <span className="text-muted-foreground">{reviews}</span>
+            </span>
+          )}
+        </Link>
+        <WishlistHeartButton
+          product={product}
+          variant="icon-float"
+          className="absolute bottom-2.5 right-2.5 z-10"
+        />
+      </div>
 
       {/* Product info */}
       <div className="flex flex-1 flex-col px-3.5 pb-4 pt-3.5">
@@ -233,6 +243,7 @@ export function BhiduApprovedSection({
                     return (
                       <BhiduProductCard
                         key={product.id}
+                        product={product}
                         productId={product.id}
                         title={product.title}
                         image={image ?? ""}

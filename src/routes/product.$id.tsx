@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type ReactNode } from "react";
-import { BellRing, Check, ChevronDown, ChevronRight, Droplets, Flower2, Heart, Leaf, PackageOpen, Palette, PawPrint, Ruler, ScanSearch, ShoppingBag, Sparkles, Sprout, Star, Sun, Wind, X } from "lucide-react";
+import { BellRing, Check, ChevronDown, ChevronRight, Droplets, Flower2, Leaf, PackageOpen, Palette, PawPrint, Ruler, ScanSearch, ShoppingBag, Sparkles, Sprout, Star, Sun, Wind, X } from "lucide-react";
 import { toast } from "sonner";
 import { productsApi, queryKeys, recommendationApi, settingsApi, miscApi, reviewsApi } from "@/api/services";
 import { PageSkeleton, ErrorState } from "@/components/shared/page-state";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { money } from "@/components/product/product-card";
+import { WishlistHeartButton } from "@/components/product/wishlist-heart-button";
 import { YouMayAlsoLike, alsoLikeFromProduct } from "@/components/product/you-may-also-like";
 import { PurchaseInfo, PurchaseButtons, PurchaseActions } from "@/components/product/purchase-extras";
 import { ReviewsSection } from "@/components/product/reviews-section";
@@ -471,6 +472,8 @@ function LiveProductPage({ product: p }: { product: Product }) {
               onBuyNow={stock > 0 ? () => void buyNow() : undefined}
             />
 
+            <WishlistHeartButton product={p} variant="pill" className="mt-2.5 w-full" />
+
             {planterNames.length > 0 && (
               <div className="mt-6">
                 <h2 className="mb-2.5 text-sm font-bold text-foreground">Select Planter</h2>
@@ -507,7 +510,7 @@ function LiveProductPage({ product: p }: { product: Product }) {
       <ProductFaqSection faq={p.faq} fallbackImage={imgs[0]} />
 
       <div className="fixed inset-x-0 bottom-[calc(3.5rem+env(safe-area-inset-bottom,0px))] z-40 flex items-center gap-2 border-t bg-background p-3 lg:hidden">
-        <Button variant="outline" size="icon" className="size-11 shrink-0" aria-label="Add to wishlist"><Heart /></Button>
+        <WishlistHeartButton product={p} variant="icon-outline" className="size-11 shrink-0" />
         {stock > 0 ? <Button className="flex-1 bg-forest text-forest-foreground hover:bg-forest/90" size="lg" onClick={add}><ShoppingBag />Add {quantity} — {money(price * quantity)}</Button> : <Button className="flex-1" size="lg" variant="secondary" onClick={() => void notifyMe()}><BellRing />Notify me</Button>}
       </div>
 

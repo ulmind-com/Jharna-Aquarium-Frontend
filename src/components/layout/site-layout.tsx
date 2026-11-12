@@ -11,6 +11,7 @@ import { useTypewriter } from "@/hooks/use-typewriter";
 import { SEARCH_PHRASES } from "@/lib/search-phrases";
 import { useAuth } from "@/contexts/auth-context";
 import { useCart } from "@/contexts/cart-context";
+import { formatWishlistInr, useWishlist } from "@/contexts/wishlist-context";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar } from "@/components/account/account-shell";
@@ -76,7 +77,7 @@ function NavLinks({
         Journal
       </Link>
       <Link to="/locate-store" {...props}>
-        Locate Store
+        Visit Store
       </Link>
     </>
   );
@@ -140,22 +141,22 @@ function HeaderSearch() {
   const navigate = useNavigate();
   return (
     <form
-      className="relative hidden min-w-0 lg:block"
+      className="relative hidden min-w-0 lg:block lg:w-[270px] xl:w-[340px]"
       onSubmit={(event) => {
         event.preventDefault();
         const q = search.trim();
         if (q) void navigate({ to: "/search", search: { q } });
       }}
     >
-      <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-forest">
-        <LottieIcon src={LOTTIE_ICONS.magnifier} fallback={Search} className="size-5" label="Search" />
+      <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-forest">
+        <LottieIcon src={LOTTIE_ICONS.magnifier} fallback={Search} className="size-4.5" label="Search" />
       </span>
       <input
         value={search}
         onChange={(event) => setSearch(event.target.value)}
         aria-label="Search products"
         placeholder={placeholder}
-        className="h-11 w-full rounded-lg bg-search-surface pl-11 pr-4 text-sm outline-none ring-primary transition-shadow duration-200 placeholder:text-muted-foreground focus:ring-1"
+        className="h-10 w-full rounded-lg bg-search-surface pl-10 pr-4 text-sm outline-none ring-primary transition-shadow duration-200 placeholder:text-muted-foreground focus:ring-1"
       />
     </form>
   );
@@ -166,6 +167,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const { count, openCart } = useCart();
+  const { totalCount: wishlistCount, totalPrice: wishlistTotal } = useWishlist();
   const { data: settings } = useQuery({
     queryKey: queryKeys.settings,
     queryFn: settingsApi.get,
@@ -226,63 +228,90 @@ export function SiteLayout({ children }: { children: ReactNode }) {
     <div className="min-h-screen bg-background text-foreground">
       <AnnouncementBar announcements={settings?.announcements} />
       <header className="sticky top-0 z-40 border-b border-border bg-background/98 backdrop-blur-md">
-        <div className="mx-auto grid h-16 max-w-[1480px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-6 lg:h-[68px] lg:grid-cols-[220px_minmax(360px,1fr)_220px] lg:gap-8 lg:px-9">
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu">
-                <Menu />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-[88%] p-0">
-              <SheetHeader className="border-b p-5 text-left">
-                <SheetTitle asChild>
-                  <BrandLogo name={displayName(settings?.shop.name)} asLink={false} />
-                </SheetTitle>
-              </SheetHeader>
-              <nav className="flex flex-col p-3">
-                <NavLinks
-                  className="border-b border-border px-3 py-4 text-sm font-semibold"
-                  onNavigate={() => setMobileOpen(false)}
-                />
-              </nav>
-              {categories.length > 0 && (
-                <div className="px-6 py-4">
-                  <p className="mb-3 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                    All categories
-                  </p>
-                  {categories.map((cat) => (
-                    <Link
-                      key={cat.id}
-                      to="/category/$slug"
-                      params={{ slug: cat.slug || cat.id }}
-                      onClick={() => setMobileOpen(false)}
-                      className="block py-2 text-sm"
-                    >
-                      {cat.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </SheetContent>
-          </Sheet>
-          <BrandLogo name={displayName(settings?.shop.name)} />
-          <HeaderSearch />
-          <div className="flex items-center justify-end gap-0.5">
-            <Button variant="ghost" size="icon" asChild className="lg:hidden">
+        <div className="mx-auto flex h-16 max-w-[1480px] items-center justify-between gap-2 px-3 sm:px-6 lg:h-[68px] lg:gap-6 lg:px-9">
+          <div className="flex min-w-0 items-center gap-1.5 sm:gap-2.5 lg:shrink-0">
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="-ml-1.5 size-8 shrink-0 lg:hidden" aria-label="Open menu">
+                  <Menu />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[88%] p-0">
+                <SheetHeader className="border-b p-5 text-left">
+                  <SheetTitle asChild>
+                    <BrandLogo name={displayName(settings?.shop.name)} asLink={false} />
+                  </SheetTitle>
+                </SheetHeader>
+                <nav className="flex flex-col p-3">
+                  <NavLinks
+                    className="border-b border-border px-3 py-4 text-sm font-semibold"
+                    onNavigate={() => setMobileOpen(false)}
+                  />
+                </nav>
+                {categories.length > 0 && (
+                  <div className="px-6 py-4">
+                    <p className="mb-3 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                      All categories
+                    </p>
+                    {categories.map((cat) => (
+                      <Link
+                        key={cat.id}
+                        to="/category/$slug"
+                        params={{ slug: cat.slug || cat.id }}
+                        onClick={() => setMobileOpen(false)}
+                        className="block py-2 text-sm"
+                      >
+                        {cat.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </SheetContent>
+            </Sheet>
+            <BrandLogo name={displayName(settings?.shop.name)} />
+          </div>
+          <div className="flex shrink-0 items-center justify-end gap-0.5 sm:gap-1.5 lg:ml-auto lg:gap-4">
+            <HeaderSearch />
+            <Button variant="ghost" size="icon" asChild className="size-8 sm:size-10 lg:hidden">
               <Link to="/search" search={{}} aria-label="Search">
                 <LottieIcon src={LOTTIE_ICONS.search} fallback={Search} className="size-5" label="Search" />
               </Link>
             </Button>
             <AccountMenu />
-            <Button variant="ghost" size="icon" asChild className="hidden sm:inline-flex">
-              <Link to="/wishlist" aria-label="Wishlist">
-                <LottieIcon src={LOTTIE_ICONS.heartPinch} fallback={Heart} className="size-5" label="Wishlist" />
+            <Button variant="ghost" size="icon" asChild className="relative hidden size-8 sm:inline-flex sm:size-10">
+              <Link
+                to="/wishlist"
+                data-wishlist-target
+                aria-label={
+                  wishlistCount > 0
+                    ? `Wishlist with ${wishlistCount} ${wishlistCount === 1 ? "item" : "items"}, in total ${formatWishlistInr(wishlistTotal)}`
+                    : "Wishlist"
+                }
+                title={
+                  wishlistCount > 0
+                    ? `Wishlist: ${wishlistCount} ${wishlistCount === 1 ? "item" : "items"} • In Total ${formatWishlistInr(wishlistTotal)}`
+                    : "Wishlist"
+                }
+              >
+                <Heart
+                  className={`size-5 transition-colors ${
+                    wishlistCount > 0 ? "fill-rose-500 text-rose-500" : "text-current"
+                  }`}
+                />
+                {wishlistCount > 0 && (
+                  <span
+                    data-testid="wishlist-header-badge"
+                    className="absolute right-0 top-0 flex size-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white shadow-sm"
+                  >
+                    {wishlistCount > 99 ? "99+" : wishlistCount}
+                  </span>
+                )}
               </Link>
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              className="relative"
+              className="relative size-8 sm:size-10"
               data-cart-target
               onClick={openCart}
               aria-label={`Cart with ${count} items`}
@@ -370,6 +399,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
 function MobileTabBar() {
   const { count, openCart } = useCart();
+  const { totalCount: wishlistCount } = useWishlist();
   const { user, isAuthenticated } = useAuth();
   /* Six thumb targets across a 375px phone: no side padding on the items and a
      tight label, so nothing wraps on the narrowest screens we support. */
@@ -394,7 +424,21 @@ function MobileTabBar() {
         Search
       </Link>
       <Link to="/wishlist" className={item} activeProps={active}>
-        <LottieIcon src={LOTTIE_ICONS.heartPinch} fallback={Heart} className="size-5" label="Wishlist" />
+        <span className="relative">
+          <Heart
+            className={`size-5 transition-colors ${
+              wishlistCount > 0 ? "fill-rose-500 text-rose-500" : "text-current"
+            }`}
+          />
+          {wishlistCount > 0 && (
+            <span
+              data-testid="wishlist-mobile-badge"
+              className="absolute -right-2 -top-1.5 flex size-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white"
+            >
+              {wishlistCount > 99 ? "99+" : wishlistCount}
+            </span>
+          )}
+        </span>
         Wishlist
       </Link>
       <button type="button" data-cart-target onClick={openCart} className={item}>
@@ -447,29 +491,29 @@ function Footer({ settings }: { settings: Settings | undefined }) {
           <div className="flex items-start gap-4">
             <PackageOpen className="size-8 shrink-0 text-primary-soft" />
             <div>
-              <h3 className="font-bold text-sm tracking-wide">100,000+ Plants Delivered</h3>
-              <p className="mt-1 text-xs text-forest-foreground/75">Found great new homes!</p>
+              <h3 className="font-bold text-sm tracking-wide">Healthy Plants &amp; Pets</h3>
+              <p className="mt-1 text-xs text-forest-foreground/75">Carefully inspected before handoff</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
             <HandCoins className="size-8 shrink-0 text-primary-soft" />
             <div>
               <h3 className="font-bold text-sm tracking-wide">Cash on Delivery</h3>
-              <p className="mt-1 text-xs text-forest-foreground/75">Available across India!</p>
+              <p className="mt-1 text-xs text-forest-foreground/75">Safe &amp; easy local checkout</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
             <Truck className="size-8 shrink-0 text-primary-soft" />
             <div>
-              <h3 className="font-bold text-sm tracking-wide">Fast & Safe Delivery</h3>
-              <p className="mt-1 text-xs text-forest-foreground/75">Packaged with Care and Love!</p>
+              <h3 className="font-bold text-sm tracking-wide">Fast &amp; Safe Delivery</h3>
+              <p className="mt-1 text-xs text-forest-foreground/75">Packed carefully for plants, fish &amp; gear</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
             <Headphones className="size-8 shrink-0 text-primary-soft" />
             <div>
-              <h3 className="font-bold text-sm tracking-wide">Help & Support</h3>
-              <p className="mt-1 text-xs text-forest-foreground/75">Friendly & Quick!</p>
+              <h3 className="font-bold text-sm tracking-wide">Help &amp; Support</h3>
+              <p className="mt-1 text-xs text-forest-foreground/75">Dedicated local care advice</p>
             </div>
           </div>
         </div>
@@ -486,10 +530,10 @@ function Footer({ settings }: { settings: Settings | undefined }) {
             About {shopName}
           </h2>
           <p className="text-sm leading-relaxed text-forest-foreground/75">
-            {shopName} is a platform for Urban India to stay close to nature. Every city turning
-            into a concrete jungle now, {shopName} offers unique solutions for every person with
-            beautiful plants, pots & decorative knick-knacks to create your green patch. We strive
-            to be the perfect Urban solution with our unique products developed keeping you in mind.
+            {shopName} brings living greenery and serene aquatics closer to your home. From lush
+            indoor plants, designer pots, enriched garden soil (mati) and coco peat to colorful
+            aquarium fish, tanks, pet birds and wholesome nutrition — everything nature needs lives
+            under one roof.
           </p>
         </div>
 

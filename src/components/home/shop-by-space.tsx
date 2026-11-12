@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
+import { DualTitleAccents } from "@/components/home/section-accents";
 import type { Category, SiteMedia } from "@/types/api";
 
 export interface SpaceCard {
@@ -8,29 +10,18 @@ export interface SpaceCard {
   link: string;
 }
 
-/* Local defaults — used until the admin panel supplies "spaces" media */
+/* Local defaults across Jharna Aquarium & Nursery's core worlds */
 export const defaultSpaceCards: SpaceCard[] = [
-  { id: "living-room", title: "Living Room", image: "/places/living-room.jpg", link: "/search?q=living%20room" },
-  { id: "bedroom", title: "Bedroom", image: "/places/bedroom.jpg", link: "/search?q=bedroom" },
-  { id: "balcony", title: "Balcony", image: "/places/balcony.jpg", link: "/search?q=balcony" },
-  { id: "office", title: "Office", image: "/places/office.jpg", link: "/search?q=office" },
+  { id: "live-plants", title: "Live Plants", image: "/images/space-plants.png", link: "/plants" },
+  { id: "ornamental-fish", title: "Ornamental Fish", image: "/images/space-fish.png", link: "/search?q=fish" },
+  { id: "aquarium-gear", title: "Aquarium Essentials", image: "/images/space-aquarium-gear.png", link: "/search?q=aquarium" },
+  { id: "exotic-birds", title: "Exotic Birds", image: "/images/space-birds.png", link: "/search?q=bird" },
+  { id: "pet-food", title: "Pet & Fish Food", image: "/images/space-pet-food.png", link: "/search?q=food" },
+  { id: "pots-soil", title: "Pots, Soil & Coco Peat", image: "/images/space-pots-soil.png", link: "/category/pots" },
 ];
 
-/* Parent category that holds the space sub-categories, by slug. The admin panel
-   can name it any of these; the first match wins. */
 const SPACE_PARENT_SLUGS = ["shop-by-space", "shop-by-spaces", "spaces", "transform-your-home"];
 
-/* Fallback artwork per space, used until the category has its own image */
-const FALLBACK_IMAGES: Record<string, string> = {
-  "living-room": "/places/living-room.jpg",
-  bedroom: "/places/bedroom.jpg",
-  balcony: "/places/balcony.jpg",
-  office: "/places/office.jpg",
-};
-
-/* Map the admin category tree onto space cards — each sub-category of the
-   "Shop by Space" parent becomes a tile linking to its category page, so the
-   products shown there are whatever admin filed under that category. */
 export function spaceCardsFromCategories(tree: Category[] | undefined): SpaceCard[] {
   const parent = (tree ?? []).find((cat) =>
     SPACE_PARENT_SLUGS.includes((cat.slug || "").toLowerCase()),
@@ -40,12 +31,11 @@ export function spaceCardsFromCategories(tree: Category[] | undefined): SpaceCar
     .map((child) => ({
       id: child.id,
       title: child.name,
-      image: child.image || FALLBACK_IMAGES[child.slug as string] || "/places/living-room.jpg",
+      image: child.image || "/images/space-plants.png",
       link: `/category/${child.slug}`,
     }));
 }
 
-/* Map admin-managed site media (section: "spaces") onto space cards */
 export function spaceCardsFromMedia(media: SiteMedia[] | undefined): SpaceCard[] {
   const mapped = (media ?? [])
     .filter((item) => item.image)
@@ -65,27 +55,29 @@ function SpaceTile({ space }: { space: SpaceCard }) {
       <img
         src={space.image}
         alt={space.title}
-        width={760}
-        height={1010}
+        width={800}
+        height={800}
         loading="lazy"
         className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105"
       />
-      {/* Legibility wash behind the title and the button */}
       <span
         aria-hidden
-        className="absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-black/45 to-transparent"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"
       />
-      <h3 className="relative z-10 px-4 pt-6 text-center font-display text-2xl font-bold text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)] sm:text-[28px] lg:pt-8 lg:text-[32px]">
-        {space.title}
-      </h3>
-      <span className="relative z-10 mt-auto mb-6 inline-flex items-center justify-center self-center rounded-full bg-white px-7 py-2.5 text-sm font-semibold text-forest shadow-md transition-transform duration-300 group-hover:scale-105 lg:mb-8">
-        Shop Now
-      </span>
+      <div className="relative z-10 mt-auto flex flex-col items-start gap-2.5 p-4 text-left sm:p-5">
+        <h3 className="font-display text-lg font-extrabold leading-tight text-white drop-shadow-sm sm:text-xl lg:text-2xl">
+          {space.title}
+        </h3>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-xs font-bold text-forest shadow-md transition-colors duration-200 group-hover:bg-[#eaff00] sm:px-5 sm:text-sm">
+          <span>Shop Now</span>
+          <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" strokeWidth={2.3} />
+        </span>
+      </div>
     </>
   );
 
   const className =
-    "group relative flex aspect-[3/5] flex-col overflow-hidden rounded-2xl bg-primary-soft shadow-[0_2px_14px_rgba(0,0,0,0.08)]";
+    "group relative flex aspect-square flex-col overflow-hidden rounded-2xl border border-black/10 bg-primary-soft shadow-[0_2px_14px_rgba(0,0,0,0.08)]";
 
   return external ? (
     <a href={space.link} target="_blank" rel="noreferrer" className={className}>
@@ -108,12 +100,19 @@ export function ShopBySpaceSection({
   if (spaces.length === 0) return null;
 
   return (
-    <section className="bg-[#fbe4ed] py-12 lg:py-16">
+    <section className="bg-[#fbe4ed] py-10 lg:py-14">
       <div className="mx-auto max-w-[1480px] px-4 sm:px-6 lg:px-10">
-        <h2 className="mb-8 text-center font-display text-[2rem] font-extrabold text-foreground sm:text-[2.75rem] lg:mb-10 lg:text-[3.25rem]">
-          {title}
-        </h2>
-        <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+        <div className="mb-7 flex flex-wrap items-center justify-center gap-3 text-center lg:mb-9">
+          <DualTitleAccents />
+          <h2 className="font-display text-[1.85rem] font-extrabold text-foreground sm:text-[2.5rem] lg:text-[3rem]">
+            {title}
+          </h2>
+        </div>
+        <div
+          className={`grid grid-cols-2 gap-4 sm:gap-5 lg:gap-6 ${
+            spaces.length === 4 ? "lg:grid-cols-4" : "md:grid-cols-3"
+          }`}
+        >
           {spaces.map((space) => (
             <SpaceTile key={space.id} space={space} />
           ))}
