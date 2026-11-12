@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Play } from "lucide-react";
 
 export interface VideoItem {
@@ -26,10 +27,31 @@ export function VideoGallery({
   title?: string;
   subtitle?: string;
 }) {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Defer downloading 22 MB of reel MP4s until the gallery scrolls near view so initial hydration stays instant.
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        root.querySelectorAll("video").forEach((v) => {
+          v.preload = "auto";
+          void v.play().catch(() => {});
+        });
+        observer.disconnect();
+      },
+      { rootMargin: "250px 0px" },
+    );
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, [videos]);
+
   if (!videos || videos.length === 0) return null;
 
   return (
-    <section className="relative overflow-hidden py-12 sm:py-14 lg:pb-20 lg:pt-16">
+    <section ref={sectionRef} className="relative overflow-hidden py-12 sm:py-14 lg:pb-20 lg:pt-16">
       <img
         src="/images/decor-leaves-top.png"
         alt=""
@@ -60,7 +82,7 @@ export function VideoGallery({
                 src={video.src}
                 {...(video.poster ? { poster: video.poster } : {})}
                 className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
-                autoPlay
+                preload="none"
                 loop
                 muted
                 playsInline
