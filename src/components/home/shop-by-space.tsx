@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { DualTitleAccents } from "@/components/home/section-accents";
 import type { Category, SiteMedia } from "@/types/api";
 
 export interface SpaceCard {
@@ -102,12 +101,9 @@ export function ShopBySpaceSection({
   return (
     <section className="bg-[#fbe4ed] py-10 lg:py-14">
       <div className="mx-auto max-w-[1480px] px-4 sm:px-6 lg:px-10">
-        <div className="mb-7 flex flex-wrap items-center justify-center gap-3 text-center lg:mb-9">
-          <DualTitleAccents />
-          <h2 className="font-display text-[1.85rem] font-extrabold text-foreground sm:text-[2.5rem] lg:text-[3rem]">
-            {title}
-          </h2>
-        </div>
+        <h2 className="mb-7 text-center font-display text-[1.85rem] font-extrabold text-foreground sm:text-[2.5rem] lg:mb-9 lg:text-[3rem]">
+          {title}
+        </h2>
         <div
           className={`grid grid-cols-2 gap-4 sm:gap-5 lg:gap-6 ${
             spaces.length === 4 ? "lg:grid-cols-4" : "md:grid-cols-3"

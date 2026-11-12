@@ -4,7 +4,6 @@
 
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle2, MapPin, ShieldCheck, Sparkles } from "lucide-react";
-import { DualTitleAccents } from "@/components/home/section-accents";
 
 const HIGHLIGHTS = [
   "Live Plants (Gach) & Flowering Varieties",
@@ -29,7 +28,6 @@ export function NatureAcrossIndiaSection({
       <div className="mx-auto grid max-w-[1480px] items-center gap-8 px-4 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-10">
         <div className="lg:col-span-6">
           <div className="mb-4 flex items-center gap-3">
-            <DualTitleAccents />
             <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-tint px-3 py-1 text-xs font-bold uppercase tracking-wider text-forest">
               <Sparkles className="size-3.5 text-primary" aria-hidden="true" />
               Jharna Aquarium &amp; Nursery

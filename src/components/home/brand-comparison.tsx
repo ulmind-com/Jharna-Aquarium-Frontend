@@ -141,7 +141,7 @@ export function BrandComparisonSection({
               alt=""
               aria-hidden="true"
               loading="lazy"
-              className="hidden size-12 rounded-2xl border border-forest/15 bg-white object-cover shadow-sm sm:block lg:size-14"
+              className="hidden size-12 object-contain sm:block lg:size-16"
             />
             <h2
               id="brand-comparison-title"
@@ -154,7 +154,7 @@ export function BrandComparisonSection({
               alt=""
               aria-hidden="true"
               loading="lazy"
-              className="hidden size-12 rounded-2xl border border-forest/15 bg-white object-cover shadow-sm sm:block lg:size-14"
+              className="hidden size-12 object-contain sm:block lg:size-16"
             />
           </div>
           <div className="mt-3 sm:hidden">

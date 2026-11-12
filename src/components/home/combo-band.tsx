@@ -119,9 +119,23 @@ export function ComboBand({
   if (shown.length === 0) return null;
 
   return (
-    <section className="bg-storefront-wash py-12 lg:py-16">
-      <div className="mx-auto max-w-[1480px] px-3 sm:px-6 lg:px-9">
-        <div className="mb-8 text-center lg:mb-10">
+    <section className="relative overflow-hidden bg-storefront-wash py-12 lg:py-16">
+      <img
+        src="/images/decor-combo-left.png"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        className="pointer-events-none absolute left-1 top-3 z-0 h-16 w-auto select-none object-contain sm:left-4 sm:top-4 sm:h-24 lg:left-8 lg:top-6 lg:h-32"
+      />
+      <img
+        src="/images/decor-combo-right.png"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        className="pointer-events-none absolute right-1 top-3 z-0 h-16 w-auto select-none object-contain sm:right-4 sm:top-4 sm:h-24 lg:right-8 lg:top-6 lg:h-32"
+      />
+      <div className="relative z-10 mx-auto max-w-[1480px] px-3 sm:px-6 lg:px-9">
+        <div className="mb-8 px-12 text-center sm:px-24 lg:mb-10 lg:px-28">
           <h2 className="font-display text-3xl font-extrabold text-forest sm:text-4xl lg:text-5xl">
             {title}
           </h2>
