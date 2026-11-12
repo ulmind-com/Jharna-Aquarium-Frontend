@@ -5,5 +5,5 @@ export const SEARCH_PHRASES = [
   "Search for birds & pet food",
   "Search for aquarium accessories",
   "Search for pots, mati & coco peat",
-  "Search for seeds & plant care",
+  "Search for fish food, birds & care",
 ];

@@ -26,8 +26,8 @@ import type { Settings } from "@/types/api";
 /* What the bundled nav already covers. A live category on one of these slugs
    would only repeat a link the row already has. */
 const NAV_SLUGS = new Set([
-  "plants", "pots", "plant-care", "seeds", "combos", "gifting", "corporate-gifts",
-  "garden-services", "offers", "journal", "blog", "locate-store",
+  "plants", "aquarium-fish", "birds", "aquarium-essentials", "pet-food", "pots", "soil",
+  "combos", "offers", "journal", "blog", "locate-store",
 ]);
 
 function NavLinks({
@@ -49,32 +49,29 @@ function NavLinks({
       <Link to="/plants" search={{}} {...props}>
         Plants
       </Link>
+      <Link to="/category/$slug" params={{ slug: "aquarium-fish" }} {...props}>
+        Aquarium Fish
+      </Link>
+      <Link to="/category/$slug" params={{ slug: "birds" }} {...props}>
+        Birds
+      </Link>
+      <Link to="/category/$slug" params={{ slug: "aquarium-essentials" }} {...props}>
+        Aquarium Gear
+      </Link>
+      <Link to="/category/$slug" params={{ slug: "pet-food" }} {...props}>
+        Pet Food
+      </Link>
       <Link to="/category/$slug" params={{ slug: "pots" }} {...props}>
         Pots
       </Link>
-      <Link to="/plants" search={{ q: "plant care" }} {...props}>
-        Plant Care
-      </Link>
-      <Link to="/category/$slug" params={{ slug: "seeds" }} {...props}>
-        Seeds
+      <Link to="/category/$slug" params={{ slug: "soil" }} {...props}>
+        Soil &amp; Coco Peat
       </Link>
       <Link to="/combos" {...props}>
         Combos
       </Link>
-      <Link to="/gifting" {...props}>
-        Gifting
-      </Link>
-      <Link to="/corporate-gifts" {...props}>
-        Corporate Gifts
-      </Link>
-      <Link to="/garden-services" {...props}>
-        Garden Services
-      </Link>
       <Link to="/offers" {...props}>
         Offers
-      </Link>
-      <Link to="/blog" {...props}>
-        Journal
       </Link>
       <Link to="/locate-store" {...props}>
         Visit Store
@@ -328,7 +325,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         {/* The standing nav, with any category the admin has added that the row
             does not already cover appended to it — a new category extends the
             nav rather than replacing everything in it. */}
-        <nav className="mx-auto hidden h-11 max-w-[1480px] items-center justify-center gap-8 overflow-hidden px-9 lg:flex">
+        <nav className="mx-auto hidden h-11 max-w-[1480px] items-center justify-center gap-5 overflow-hidden px-9 xl:gap-7 lg:flex">
           <NavLinks
             className="shrink-0 text-[13px] font-medium text-foreground/80 transition-colors duration-200 hover:text-primary"
             activeClassName="text-primary"

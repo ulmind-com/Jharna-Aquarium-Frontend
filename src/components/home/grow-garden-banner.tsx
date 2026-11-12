@@ -2,12 +2,12 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
 export function GrowGardenBanner({
-  image = "/garden.png",
-  imageAlt = "Seed packets, pots and seedling trays on a sunlit garden table",
-  title = "Grow your\nown Garden",
-  subtitle = "Shop our 300+ Seeds",
-  ctaLabel = "Shop Now",
-  categorySlug = "seeds",
+  image = "/images/hero-garden-supplies.png",
+  imageAlt = "Terracotta pots, organic mati sack and coco peat bricks",
+  title = "Build your\nAquatic & Green Space",
+  subtitle = "Shop Enriched Mati, Coco Peat, Pots & Live Plants",
+  ctaLabel = "Explore Now",
+  categorySlug = "soil",
 }: {
   image?: string;
   imageAlt?: string;

@@ -369,7 +369,7 @@ export function SectionRenderer({ section, ctx }: { section: PageSection; ctx: H
     case "grow_banner": {
       /* The stock banner links to a category page; a full path means the admin
          pointed it somewhere else, so render it as a free-form banner. */
-      const link = text(section.cta_link) ?? "/category/seeds";
+      const link = text(section.cta_link) ?? "/category/soil";
       const slug = link.startsWith("/category/") ? link.slice("/category/".length) : null;
       if (!slug) {
         return (

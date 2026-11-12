@@ -41,10 +41,10 @@ export const Route = createFileRoute("/plants")({
   validateSearch: parseSearch,
   head: () => ({
     meta: [
-      { title: "Plants | Jharna Aquarium & Nursery" },
-      { name: "description", content: "Explore healthy indoor and outdoor plants for Indian homes." },
-      { property: "og:title", content: "Plants | Jharna Aquarium & Nursery" },
-      { property: "og:description", content: "Explore healthy indoor and outdoor plants for Indian homes." },
+      { title: "All Products | Jharna Aquarium & Nursery" },
+      { name: "description", content: "Explore live plants, aquarium fish, exotic birds, aquascaping gear, pet food, pots, and organic potting mixes." },
+      { property: "og:title", content: "All Products | Jharna Aquarium & Nursery" },
+      { property: "og:description", content: "Explore live plants, aquarium fish, exotic birds, aquascaping gear, pet food, pots, and organic potting mixes." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -57,8 +57,8 @@ function PlantsPage() {
   const nav = useNavigate();
   return (
     <CataloguePage
-      title="All plants"
-      description="Indoor greens, flowering favourites, and hardy outdoor plants — grown and hardened at our nursery."
+      title="Full Storefront Collection"
+      description="Live plants, ornamental aquarium fish, exotic birds, aquascaping essentials, pet food, pots, and soil — curated at Jharna Aquarium & Nursery."
       filters={filters}
       onFiltersChange={(next) => void nav({ to: "/plants", search: next, replace: true })}
     />

@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
-import { searchApi } from "@/api/services";
+import { productsApi, searchApi } from "@/api/services";
 import { ProductGrid } from "@/components/product/product-card";
 import { EmptyState } from "@/components/shared/page-state";
 import { useTypewriter } from "@/hooks/use-typewriter";
@@ -43,14 +43,24 @@ function SearchPage() {
 
   const result = useQuery({
     queryKey: ["search", term],
-    queryFn: () => searchApi.search({ q: term, limit: 24 }),
+    queryFn: async () => {
+      try {
+        const res = await searchApi.search({ q: term, limit: 24 });
+        const list = Array.isArray(res) ? res : res?.items || (res as { products?: Product[] })?.products || [];
+        if (list.length > 0) return list;
+      } catch {
+        // Fall through to /products text search if /search fails
+      }
+      const fallback = await productsApi.list({ q: term, limit: 24 });
+      return Array.isArray(fallback) ? fallback : fallback?.items || [];
+    },
     enabled: term.length > 1,
   });
-  const products: Product[] = Array.isArray(result.data) ? result.data : result.data?.items || [];
+  const products: Product[] = result.data ?? [];
 
   return (
     <div className="mx-auto max-w-[1480px] px-4 py-10 sm:px-6 lg:px-10">
-      <h1 className="text-3xl sm:text-4xl">Search the nursery</h1>
+      <h1 className="text-3xl sm:text-4xl">Search Jharna Aquarium &amp; Nursery</h1>
       <form className="relative mt-6 max-w-2xl" onSubmit={(e) => e.preventDefault()} role="search">
         <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
           <LottieIcon src={LOTTIE_ICONS.search} fallback={Search} className="size-5" autoplay loop label="Search" />
@@ -72,8 +82,8 @@ function SearchPage() {
             title={term ? "No matches yet" : "What are you looking for?"}
             description={
               term
-                ? "Try a different plant name or a broader search."
-                : "Search by plant name, room, light level, or gardening need."
+                ? "Try a different keyword or browse our categories above."
+                : "Search by plant, aquarium fish, bird, pet food, tank gear, pot, or soil."
             }
           />
         )}
