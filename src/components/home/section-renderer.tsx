@@ -17,7 +17,7 @@ import { VideoGallery, defaultVideos } from "@/components/home/video-gallery";
 import { SpotlightSection, defaultSpotlightPromos } from "@/components/home/spotlight-section";
 import { BhiduApprovedSection } from "@/components/home/bhidu-approved-section";
 import { OffersMarquee, defaultOfferCards } from "@/components/home/offers-marquee";
-import { SelfWateringSection } from "@/components/home/self-watering-section";
+import { HealthyAquariumSection, SelfWateringSection } from "@/components/home/self-watering-section";
 import { PlantersRedefineSection } from "@/components/home/planters-redefine";
 import { StorefrontProductGrid } from "@/components/home/storefront-product-grid";
 import { ProductBand } from "@/components/home/product-band";
@@ -245,14 +245,16 @@ export function SectionRenderer({ section, ctx }: { section: PageSection; ctx: H
         />
       );
 
-    case "self_watering": {
+    case "self_watering":
+    case "healthy_aquarium": {
       const steps = withImage.map((item, index) => ({
         id: str(item, "id") || `step-${index}`,
         image: str(item, "image"),
         caption: str(item, "title"),
       }));
+      const Explainer = section.type === "healthy_aquarium" ? HealthyAquariumSection : SelfWateringSection;
       return (
-        <SelfWateringSection
+        <Explainer
           {...defined({
             title: text(section.title),
             description: text(section.description),

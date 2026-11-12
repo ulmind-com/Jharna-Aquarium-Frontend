@@ -58,6 +58,7 @@ export const FALLBACK_HOME_SECTIONS: PageSection[] = [
   "video_reel",
   "spotlight",
   "low_effort",
+  "healthy_aquarium",
   "bhidu",
   "offers",
   "combos",
