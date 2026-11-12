@@ -13,10 +13,7 @@ export const LOTTIE_ACCENTS = {
   },
   pottedPlant: {
     src: "/lottie/potted-plant.json",
-    // Keep pot & base foliage visible from the first painted frame instead of popping from 0%
-    segment: [55, 105] as [number, number],
-    mode: "bounce" as const,
-    speed: 0.55,
+    speed: 0.9,
   },
 } as const;
 
