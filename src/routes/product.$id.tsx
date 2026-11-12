@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { BellRing, Check, ChevronDown, ChevronRight, Droplets, Flower2, Leaf, PackageOpen, Palette, PawPrint, Ruler, ScanSearch, ShoppingBag, Sparkles, Sprout, Star, Sun, Wind, X } from "lucide-react";
 import { toast } from "sonner";
 import { productsApi, queryKeys, recommendationApi, settingsApi, miscApi, reviewsApi } from "@/api/services";
@@ -11,7 +11,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { money } from "@/components/product/product-card";
 import { WishlistHeartButton } from "@/components/product/wishlist-heart-button";
 import { YouMayAlsoLike, alsoLikeFromProduct } from "@/components/product/you-may-also-like";
-import { PurchaseInfo, PurchaseButtons, PurchaseActions } from "@/components/product/purchase-extras";
+import { GIFT_ORDER_KEY, GIFT_NOTE_KEY } from "@/components/product/purchase-extras";
+import {
+  BestsellerRating,
+  UrgencyRow,
+  PriceBlock,
+  WelcomeOfferStrip,
+  QtyAddToCart,
+  BuyNowBlock,
+  PayTrustLine,
+  CouponCards,
+  defaultCoupons,
+  DeliveryEstimator,
+  FeatureGrid,
+  SpecificationsCard,
+  specRowsForProduct,
+} from "@/components/product/product-detail-panel";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import { Gift } from "lucide-react";
 import { ReviewsSection } from "@/components/product/reviews-section";
 import { ComparisonSection } from "@/components/product/comparison-section";
 import { ProductFaqSection } from "@/components/product/product-faq-section";
@@ -271,20 +289,12 @@ function ShippingEstimator({ deliveryLabel }: { deliveryLabel?: string | undefin
   );
 }
 
-function BelowImageInfo({ description, care, careTitle = "Care Instruction", deliveryLabel, actions }: { description?: string | undefined; care: string[]; careTitle?: string; deliveryLabel?: string | undefined; actions?: ReactNode }) {
-  if (!description && care.length === 0 && !actions) {
-    return (
-      <div className="mt-8 space-y-6">
-        <ShippingEstimator deliveryLabel={deliveryLabel} />
-      </div>
-    );
-  }
+function BelowImageInfo({ description, care, careTitle = "Care Instruction" }: { description?: string | undefined; care: string[]; careTitle?: string }) {
+  if (!description && care.length === 0) return null;
   return (
     <div className="mt-8 space-y-6">
       {description && <DetailAccordion title="Description"><p>{description}</p></DetailAccordion>}
       {care.length > 0 && <DetailAccordion title={careTitle}><ul className="space-y-2">{care.map((item) => <li key={item}>{item}</li>)}</ul></DetailAccordion>}
-      <ShippingEstimator deliveryLabel={deliveryLabel} />
-      {actions}
     </div>
   );
 }
@@ -338,6 +348,35 @@ function Breadcrumbs({ title, category }: { title: string; category?: string }) 
       <Link to="/plants" search={{}} className="hover:text-primary">{category || "Products"}</Link><ChevronRight className="size-3.5" />
       <span className="truncate text-foreground">{title}</span>
     </nav>
+  );
+}
+
+function GiftToggle() {
+  const [isGift, setIsGift] = useState(false);
+  const [note, setNote] = useState("");
+  useEffect(() => {
+    try {
+      setIsGift(window.localStorage.getItem(GIFT_ORDER_KEY) === "true");
+      setNote(window.localStorage.getItem(GIFT_NOTE_KEY) ?? "");
+    } catch { /* storage unavailable */ }
+  }, []);
+  const saveGift = (checked: boolean) => {
+    setIsGift(checked);
+    try { window.localStorage.setItem(GIFT_ORDER_KEY, String(checked)); } catch { /* storage unavailable */ }
+  };
+  const saveNote = (value: string) => {
+    setNote(value);
+    try { window.localStorage.setItem(GIFT_NOTE_KEY, value); } catch { /* storage unavailable */ }
+  };
+  return (
+    <div className="mt-4">
+      <label className="flex cursor-pointer items-center gap-2 text-xs text-foreground sm:text-sm">
+        <Checkbox checked={isGift} onCheckedChange={(checked) => saveGift(checked === true)} className="size-4 rounded-sm" />
+        <Gift className="size-4 text-primary" />
+        <span>Make this a gift · Add a hand-written note free</span>
+      </label>
+      {isGift && <Textarea value={note} onChange={(event) => saveNote(event.target.value)} maxLength={300} rows={2} placeholder="Write your gift note" className="mt-3 bg-background" aria-label="Gift note" />}
+    </div>
   );
 }
 
@@ -429,53 +468,49 @@ function LiveProductPage({ product: p }: { product: Product }) {
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.18fr)_minmax(400px,.82fr)] lg:gap-7">
           <div className="min-w-0">
             <Gallery images={imgs} title={p.title} activeImage={activeImage} onChange={setActiveImage} />
-            <BelowImageInfo description={description} care={[...care, ...tips]} deliveryLabel={deliveryLabel} actions={<PurchaseActions price={price} quantity={quantity} stock={stock} settings={settings.data} />} />
+            <BelowImageInfo description={description} care={[...care, ...tips]} />
           </div>
           <section className="min-w-0 rounded-md p-5 sm:p-6">
-            <RatingLine rating={p.rating} count={p.review_count} suffix={p.sold_count ? `${p.sold_count.toLocaleString("en-IN")} Happy Customers` : undefined} />
-            <h1 className="mt-2.5 text-3xl leading-tight text-foreground">{p.title}</h1>
-            <p className="mt-2 text-sm text-foreground/85">{p.short_description || p.description}</p>
+            <BestsellerRating rating={p.rating} count={p.review_count} bestseller={p.is_bestseller || p.is_featured} />
+            <h1 className="mt-2.5 text-2xl font-bold leading-tight text-foreground sm:text-3xl">{p.title}</h1>
+            {(p.short_description || p.description) && <p className="mt-2 text-sm text-foreground/85">{p.short_description || p.description}</p>}
+
+            <UrgencyRow productId={p.id} />
+            <PriceBlock price={price} mrp={mrp} taxInclusive={settings.data?.tax_rate !== undefined} />
+            <WelcomeOfferStrip />
 
             {sizeNames.length > 0 && (
-              <div className="mt-6">
-                <div className="mb-2.5 flex items-center justify-between gap-4">
-                  <h2 className="text-sm font-bold text-foreground">Select Plant Size</h2>
-                  {heights.length > 0 && <button type="button" onClick={() => setSizeGuideOpen(true)} className="text-xs font-semibold text-forest underline underline-offset-4">Size Guide</button>}
+              <div className="mt-4">
+                <div className="mb-1.5 flex items-center justify-between gap-4">
+                  <h2 className="text-xs font-bold text-foreground">Select Size</h2>
+                  {heights.length > 0 && <button type="button" onClick={() => setSizeGuideOpen(true)} className="text-[11px] font-semibold text-forest underline underline-offset-4">Size Guide</button>}
                 </div>
-                <div className="grid max-w-[360px] grid-cols-2 gap-2 sm:grid-cols-3">
+                <div className="flex flex-wrap gap-1.5">
                   {sizeNames.map((name) => {
                     const indices = variants.map((item, index) => ({ item, index })).filter(({ item }) => item.name === name);
                     const unavailable = indices.every(({ item }) => item.stock < 1);
-                    return <button key={name} type="button" disabled={unavailable} aria-pressed={name === selectedSize} onClick={() => selectSize(name)} className={`h-12 rounded-md border px-3 text-sm font-semibold transition-colors duration-200 ${name === selectedSize ? "border-primary bg-primary text-primary-foreground" : "border-input bg-background hover:border-primary"} disabled:cursor-not-allowed disabled:opacity-45`}>{name}</button>;
+                    return <button key={name} type="button" disabled={unavailable} aria-pressed={name === selectedSize} onClick={() => selectSize(name)} className={`h-8 rounded-md border px-2.5 text-xs font-semibold transition-colors duration-200 ${name === selectedSize ? "border-primary bg-primary text-primary-foreground" : "border-input bg-background hover:border-primary"} disabled:cursor-not-allowed disabled:opacity-45`}>{name}</button>;
                   })}
                 </div>
               </div>
             )}
 
-            <PurchaseInfo
-              colors={colorNames.map((name) => ({ label: name, available: colorVariants.some(({ item }) => item.pot_color === name && item.stock > 0) }))}
-              selectedColor={v?.pot_color ?? colorNames[0]}
-              onColorChange={selectColor}
-              price={price}
-              mrp={mrp}
+            <QtyAddToCart
               quantity={quantity}
               stock={stock}
               onQuantityChange={setQuantity}
-              settings={settings.data}
-              sku={v?.sku ?? p.sku}
-              sizeLabel={v?.pot_size ?? v?.height ?? selectedSize}
-            />
-
-            <PurchaseButtons
-              stock={stock}
               onAdd={stock > 0 ? add : () => void notifyMe()}
-              onBuyNow={stock > 0 ? () => void buyNow() : undefined}
+              inStock={stock > 0}
             />
+            <BuyNowBlock price={price} mrp={mrp} quantity={quantity} onBuyNow={() => void buyNow()} disabled={stock < 1} />
+            <PayTrustLine />
 
-            <WishlistHeartButton product={p} variant="pill" className="mt-2.5 w-full" />
+            <CouponCards coupons={defaultCoupons(settings.data)} />
+            <DeliveryEstimator />
+            <WishlistHeartButton product={p} variant="pill" className="mt-3 w-full" />
 
             {planterNames.length > 0 && (
-              <div className="mt-6">
+              <div className="mt-5">
                 <h2 className="mb-2.5 text-sm font-bold text-foreground">Select Planter</h2>
                 <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
                   {planterNames.map((name) => {
@@ -492,7 +527,25 @@ function LiveProductPage({ product: p }: { product: Product }) {
               </div>
             )}
 
+            {colorNames.length > 0 && (
+              <div className="mt-5">
+                <h2 className="mb-2.5 text-sm font-bold text-foreground">Color <span className="font-normal text-muted-foreground">— {v?.pot_color ?? colorNames[0]}</span></h2>
+                <div className="flex flex-wrap gap-2">
+                  {colorNames.map((name) => {
+                    const available = colorVariants.some(({ item }) => item.pot_color === name && item.stock > 0);
+                    const active = (v?.pot_color ?? colorNames[0]) === name;
+                    return <button key={name} type="button" disabled={!available} aria-pressed={active} onClick={() => selectColor(name)} className={`h-9 rounded-md border px-3 text-sm font-semibold transition-colors duration-200 ${active ? "border-primary bg-primary text-primary-foreground" : "border-input bg-background hover:border-primary"} disabled:cursor-not-allowed disabled:opacity-45`}>{name}</button>;
+                  })}
+                </div>
+              </div>
+            )}
+
+            <GiftToggle />
+            <FeatureGrid />
+
             {traits.length > 0 && <ul className="mt-5 flex flex-wrap gap-2">{traits.map(({ icon: Icon, label }) => <li key={label} className="flex items-center gap-1.5 rounded-full bg-primary-tint px-3 py-1.5 text-xs font-medium text-primary-soft-foreground"><Icon className="size-3.5" />{label}</li>)}</ul>}
+
+            <SpecificationsCard rows={specRowsForProduct(p)} />
 
             <div className="mt-6"><ProductFactsGrid facts={facts.length ? facts : specRows.map(({ icon: _Icon, label, value }) => ({ icon: "use" as const, label, value }))} /></div>
           </section>
