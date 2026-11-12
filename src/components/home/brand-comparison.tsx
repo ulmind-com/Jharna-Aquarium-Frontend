@@ -1,5 +1,5 @@
 import { Check, X } from "lucide-react";
-import { DualTitleAccents } from "@/components/home/section-accents";
+import { DecorativeLottie, DualTitleAccents, LOTTIE_ACCENTS } from "@/components/home/section-accents";
 
 type CellStatus = "positive" | "negative" | "mixed";
 
@@ -135,13 +135,10 @@ export function BrandComparisonSection({
           <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-forest/15 bg-white px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-forest shadow-xs">
             Aquarium &amp; Botanical Excellence
           </span>
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-            <img
-              src="/images/accent-tree.png"
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
-              className="hidden size-12 object-contain sm:block lg:size-16"
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
+            <DecorativeLottie
+              {...LOTTIE_ACCENTS.pottedPlant}
+              className="hidden aspect-[1050/2149] w-9 shrink-0 sm:block lg:w-12"
             />
             <h2
               id="brand-comparison-title"
@@ -149,12 +146,9 @@ export function BrandComparisonSection({
             >
               {title}
             </h2>
-            <img
-              src="/images/accent-aquarium.png"
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
-              className="hidden size-12 object-contain sm:block lg:size-16"
+            <DecorativeLottie
+              {...LOTTIE_ACCENTS.aquarium}
+              className="hidden size-14 shrink-0 sm:block lg:size-20"
             />
           </div>
           <div className="mt-3 sm:hidden">

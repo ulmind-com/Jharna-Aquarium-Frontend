@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { DecorativeLottie, LOTTIE_ACCENTS } from "@/components/home/section-accents";
 import { ProductCard } from "@/components/product/product-card";
 import type { Product } from "@/types/api";
 
@@ -20,7 +21,7 @@ export function ProductBand({
   ctaLabel?: string;
   ctaLink?: string;
   limit?: number;
-  sideDecor?: { leftSrc: string; rightSrc: string };
+  sideDecor?: boolean | { leftSrc?: string; rightSrc?: string };
 }) {
   /* Five across on a desktop, so the shipped limit of 10 is the two rows these
      bands are meant to be; a thin catalogue just runs short. */
@@ -33,19 +34,14 @@ export function ProductBand({
     <section className="relative overflow-hidden bg-storefront-wash py-12 lg:py-16">
       {sideDecor && (
         <>
-          <img
-            src={sideDecor.leftSrc}
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            className="pointer-events-none absolute left-1 top-3 z-0 h-16 w-auto select-none object-contain sm:left-4 sm:top-4 sm:h-24 lg:left-8 lg:top-6 lg:h-32"
+          <DecorativeLottie
+            {...LOTTIE_ACCENTS.pottedPlant}
+            className="absolute left-2 top-1 z-0 aspect-[1050/2149] w-10 sm:left-5 sm:top-2 sm:w-14 lg:left-9 lg:top-2 lg:w-[76px]"
           />
-          <img
-            src={sideDecor.rightSrc}
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            className="pointer-events-none absolute right-1 top-3 z-0 h-16 w-auto select-none object-contain sm:right-4 sm:top-4 sm:h-24 lg:right-8 lg:top-6 lg:h-32"
+          <DecorativeLottie
+            {...LOTTIE_ACCENTS.pottedPlant}
+            mirror
+            className="absolute right-2 top-1 z-0 aspect-[1050/2149] w-10 sm:right-5 sm:top-2 sm:w-14 lg:right-9 lg:top-2 lg:w-[76px]"
           />
         </>
       )}

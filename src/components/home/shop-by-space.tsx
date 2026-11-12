@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { DecorativeLottie, LOTTIE_ACCENTS } from "@/components/home/section-accents";
 import { ArrowRight } from "lucide-react";
 import type { Category, SiteMedia } from "@/types/api";
 
@@ -99,9 +100,13 @@ export function ShopBySpaceSection({
   if (spaces.length === 0) return null;
 
   return (
-    <section className="bg-[#fbe4ed] py-10 lg:py-14">
-      <div className="mx-auto max-w-[1480px] px-4 sm:px-6 lg:px-10">
-        <h2 className="mb-7 text-center font-display text-[1.85rem] font-extrabold text-foreground sm:text-[2.5rem] lg:mb-9 lg:text-[3rem]">
+    <section className="relative overflow-hidden bg-[#fbe4ed] py-10 lg:py-14">
+      <DecorativeLottie
+        {...LOTTIE_ACCENTS.aquarium}
+        className="absolute right-2 top-2 z-0 size-16 sm:right-6 sm:top-3 sm:size-24 lg:right-10 lg:top-2 lg:size-28"
+      />
+      <div className="relative z-10 mx-auto max-w-[1480px] px-4 sm:px-6 lg:px-10">
+        <h2 className="mb-7 px-14 text-center font-display text-[1.85rem] font-extrabold text-foreground sm:px-28 sm:text-[2.5rem] lg:mb-9 lg:text-[3rem]">
           {title}
         </h2>
         <div

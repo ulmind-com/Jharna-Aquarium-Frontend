@@ -147,10 +147,7 @@ export function SectionRenderer({ section, ctx }: { section: PageSection; ctx: H
         <ProductBand
           products={ctx.bestsellers}
           title={text(section.title) ?? "Bestsellers"}
-          sideDecor={{
-            leftSrc: "/images/decor-bestseller-left.png",
-            rightSrc: "/images/decor-bestseller-right.png",
-          }}
+          sideDecor
           {...defined({
             subtitle: text(section.subtitle),
             ctaLabel: text(section.cta_label),
